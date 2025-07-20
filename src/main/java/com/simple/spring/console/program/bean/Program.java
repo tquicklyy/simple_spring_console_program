@@ -4,6 +4,7 @@ import com.simple.spring.console.program.service.FunctionsService;
 import com.simple.spring.console.program.utils.PrinterMessages;
 import com.simple.spring.console.program.utils.StringDesign;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -37,5 +38,9 @@ public class Program {
                 return;
             };
         }
+    }
+
+    public void endProgram(ConfigurableApplicationContext context) {
+        context.close();
     }
 }

@@ -11,6 +11,6 @@ public class AppMain {
                 new AnnotationConfigApplicationContext(AppConfig.class);
         Program program = context.getBean(Program.class);
         program.startProgram();
-        context.close();
+        program.endProgram(context);
     }
 }

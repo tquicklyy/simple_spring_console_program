@@ -10,4 +10,7 @@ public class StringDesign {
     public static final String BOLD = "\u001B[1m";
     public static final String UNDERLINE = "\u001B[4m";
 
+    public static final String CURSOR_TO_START = "\u001B[H";
+    public static final String CLEAR_CONSOLE = "\u001B[2J";
+
 }

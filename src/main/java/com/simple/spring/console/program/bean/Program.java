@@ -2,6 +2,7 @@ package com.simple.spring.console.program.bean;
 
 import com.simple.spring.console.program.service.FunctionsService;
 import com.simple.spring.console.program.utils.PrinterMessages;
+import com.simple.spring.console.program.utils.StringDesign;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -29,9 +30,12 @@ public class Program {
 
         while(true) {
             PrinterMessages.printNumbersOfProgramFunctions();
+            System.out.printf("%sYour choice: %s", StringDesign.RED_COLOR, StringDesign.GREEN_COLOR);
             option = scanner.nextInt();
             scanner.nextLine();
-            service.execute(option, this);
+            if(!service.execute(option, this)) {
+                return;
+            };
         }
     }
 }

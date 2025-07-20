@@ -10,7 +10,7 @@ public class PrinterMessages {
                 """, StringDesign.BOLD, StringDesign.GREEN_COLOR,  appName);
     }
 
-    public static void printNumbersOfFunctions() {
+    public static void printNumbersOfProgramFunctions() {
         String[] funcs = {
                 "Randomizer",
                 "Calculator",
@@ -22,11 +22,19 @@ public class PrinterMessages {
         };
 
         for (int i = 0; i < funcs.length; i++) {
-            System.out.printf("%s%d: %s%s \n",
+            System.out.printf("%s%d: %s%s%s \n",
                     StringDesign.GREEN_COLOR,
                     i + 1,
                     StringDesign.RED_COLOR,
-                    funcs[i]);
+                    funcs[i],
+                    StringDesign.GREEN_COLOR);
         }
+    }
+
+    public static void printDefaultMessageForEvent() {
+        System.out.printf("""
+                %sThe necessary data is being accessed.
+                Please wait.%s
+                """, StringDesign.PURPLE_COLOR, StringDesign.GREEN_COLOR);
     }
 }

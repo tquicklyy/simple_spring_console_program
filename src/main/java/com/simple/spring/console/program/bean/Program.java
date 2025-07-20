@@ -1,5 +1,6 @@
 package com.simple.spring.console.program.bean;
 
+import com.simple.spring.console.program.service.FunctionsService;
 import com.simple.spring.console.program.utils.PrinterMessages;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -10,9 +11,11 @@ import java.util.Scanner;
 public class Program {
 
     private final String appName;
+    private final FunctionsService service;
 
-    public Program(@Value("${app.name}") String appName) {
+    public Program(@Value("${app.name}") String appName, FunctionsService service) {
         this.appName = appName;
+        this.service = service;
     }
 
     public void startProgram() {
@@ -25,13 +28,10 @@ public class Program {
         int option;
 
         while(true) {
-            PrinterMessages.printNumbersOfFunctions();
+            PrinterMessages.printNumbersOfProgramFunctions();
             option = scanner.nextInt();
             scanner.nextLine();
-
-            switch (option) {
-
-            }
+            service.execute(option, this);
         }
     }
 }

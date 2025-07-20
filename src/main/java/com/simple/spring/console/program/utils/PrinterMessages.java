@@ -40,12 +40,12 @@ public class PrinterMessages {
 
     public static void printDefaultMessageForEvent() throws InterruptedException {
         LOG.info("""
-                {}The necessary data is being accessed.""", StringDesign.RED_COLOR);
+                {}The necessary data is being accessed.{}""", StringDesign.RED_COLOR, StringDesign.GREEN_COLOR);
         printDotsAndWaitMessage(5);
     }
 
     public static void printDotsAndWaitMessage(int countOfDots) throws InterruptedException {
-        System.out.print("Please wait");
+        LOG.info("{} Please wait", StringDesign.RED_COLOR);
         for (int i = 0; i < countOfDots; i++) {
             System.out.print(".");
             Thread.sleep(ThreadUtils.TIME_TO_SLEEP);

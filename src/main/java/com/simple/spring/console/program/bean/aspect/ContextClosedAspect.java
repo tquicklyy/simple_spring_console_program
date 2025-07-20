@@ -1,5 +1,6 @@
 package com.simple.spring.console.program.bean.aspect;
 
+import com.simple.spring.console.program.utils.StringDesign;
 import com.simple.spring.console.program.utils.ThreadUtils;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -26,6 +27,6 @@ public class ContextClosedAspect {
 
     @After("contextClosePointCut()")
     public void afterContextClose() throws InterruptedException {
-        LOG.info("Context is closed. Goodbye!");
+        LOG.info("{} Context is closed. Goodbye!", StringDesign.RED_COLOR);
     }
 }

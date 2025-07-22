@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.InputMismatchException;
+
 
 @Component
 public class Program {
@@ -46,10 +48,9 @@ public class Program {
                 if(!service.execute(option)) {
                     return;
                 }
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 PrinterGeneralMessagesUtils.printAboutIncorrectInput();
                 ScannerGeneralMessages.skipLine();
-                continueProgram();
             }
         }
     }

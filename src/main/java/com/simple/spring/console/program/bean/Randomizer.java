@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
+import java.util.InputMismatchException;
 import java.util.Random;
 
 @Component
@@ -33,14 +34,19 @@ public class Randomizer {
     }
 
     public void getNewNumber(int limit, int left, int right) {
-        PrinterGeneralMessagesUtils.printYellowMessage("Starting the enumeration of numbers");
-        new Random().ints(left, right).limit(limit).forEach(number -> {
-            LOG.info("{}{} number: {}{}", StringDesign.RED_COLOR, counter, number, StringDesign.GREEN_COLOR);
-            counter++;
-        });
-        counter = 1;
-        PrinterGeneralMessagesUtils.skipText(1);
-        PrinterGeneralMessagesUtils.printYellowMessage("Ending the enumeration of numbers");
+        try {
+            PrinterGeneralMessagesUtils.printYellowMessage("Starting the enumeration of numbers");
+            new Random().ints(left, right).limit(limit).forEach(number -> {
+                LOG.info("{}{} number: {}{}", StringDesign.RED_COLOR, counter, number, StringDesign.GREEN_COLOR);
+                counter++;
+            });
+            counter = 1;
+            PrinterGeneralMessagesUtils.skipText(1);
+        } catch (IllegalArgumentException e) {
+            PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+        } finally {
+            PrinterGeneralMessagesUtils.printYellowMessage("Ending the enumeration of numbers");
+        }
     }
 
     public void getOptions() {
@@ -52,38 +58,33 @@ public class Randomizer {
             option = ScannerGeneralMessages.getNewIntegerWithLine();
             PrinterGeneralMessagesUtils.skipText(1);
 
-            try {
-                switch (option) {
-                    case 1:
-                        PrinterGeneralMessagesUtils.printRedMessage("Please enter range like: 0 100");
-                        PrinterGeneralMessagesUtils.printYourChoice();
+            switch (option) {
+                case 1:
+                    PrinterGeneralMessagesUtils.printRedMessage("Please enter range like: 0 100");
+                    PrinterGeneralMessagesUtils.printYourChoice();
 
-                        int left = ScannerGeneralMessages.getNewIntegerWithoutLine();
-                        int right = ScannerGeneralMessages.getNewIntegerWithLine();
-                        PrinterGeneralMessagesUtils.skipText(1);
+                    int left = ScannerGeneralMessages.getNewIntegerWithoutLine();
+                    int right = ScannerGeneralMessages.getNewIntegerWithLine();
+                    PrinterGeneralMessagesUtils.skipText(1);
 
-                        getNewNumber(1 , left, right);
-                        break;
-                    case 2:
-                        PrinterGeneralMessagesUtils.printRedMessage("Please enter number of numbers and range like: 1 0 100");
-                        PrinterGeneralMessagesUtils.printYourChoice();
+                    getNewNumber(1 , left, right);
+                    break;
+                case 2:
+                    PrinterGeneralMessagesUtils.printRedMessage("Please enter number of numbers and range like: 1 0 100");
+                    PrinterGeneralMessagesUtils.printYourChoice();
 
-                        option = ScannerGeneralMessages.getNewIntegerWithoutLine();
-                        left = ScannerGeneralMessages.getNewIntegerWithoutLine();
-                        right = ScannerGeneralMessages.getNewIntegerWithLine();
-                        PrinterGeneralMessagesUtils.skipText(1);
+                    option = ScannerGeneralMessages.getNewIntegerWithoutLine();
+                    left = ScannerGeneralMessages.getNewIntegerWithoutLine();
+                    right = ScannerGeneralMessages.getNewIntegerWithLine();
+                    PrinterGeneralMessagesUtils.skipText(1);
 
-                        getNewNumber(option, left, right);
-                        break;
-                    case 3:
-                        publisher.publishEvent(new ExitRandomizerEvent(this));
-                        return;
+                    getNewNumber(option, left, right);
+                    break;
+                case 3:
+                    publisher.publishEvent(new ExitRandomizerEvent(this));
+                    return;
 
-                    default:
-                }
-            } catch (RuntimeException e) {
-                PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-                ScannerGeneralMessages.skipLine();
+                default:
             }
         }
     }

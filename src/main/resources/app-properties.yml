@@ -3,4 +3,4 @@ app:
 
   main-funcs: "Randomizer;Calculator;Head and Tails;Rock, paper, scissors;Password generator;Get length of string;Exit program"
 
-  calculator-funcs: "Get new random number;Get few new random number;Exit"
+  calculator-funcs: "Get new random number;Get few new random number;Go back"

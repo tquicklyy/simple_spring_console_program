@@ -54,37 +54,42 @@ public class Randomizer {
 
         while (true) {
             PrinterGeneralMessagesUtils.printOptionsWithFuncs(funcs);
-            PrinterGeneralMessagesUtils.printYourChoice();
-            option = ScannerGeneralMessages.getNewIntegerWithLine();
-            PrinterGeneralMessagesUtils.skipText(1);
+            try {
+                PrinterGeneralMessagesUtils.printYourChoice();
+                option = ScannerGeneralMessages.getNewIntegerWithLine();
+                PrinterGeneralMessagesUtils.skipText(1);
 
-            switch (option) {
-                case 1:
-                    PrinterGeneralMessagesUtils.printRedMessage("Please enter range like: 0 100");
-                    PrinterGeneralMessagesUtils.printYourChoice();
+                switch (option) {
+                    case 1:
+                        PrinterGeneralMessagesUtils.printRedMessage("Please enter range like: 0 100");
+                        PrinterGeneralMessagesUtils.printYourChoice();
 
-                    int left = ScannerGeneralMessages.getNewIntegerWithoutLine();
-                    int right = ScannerGeneralMessages.getNewIntegerWithLine();
-                    PrinterGeneralMessagesUtils.skipText(1);
+                        int left = ScannerGeneralMessages.getNewIntegerWithoutLine();
+                        int right = ScannerGeneralMessages.getNewIntegerWithLine();
+                        PrinterGeneralMessagesUtils.skipText(1);
 
-                    getNewNumber(1 , left, right);
-                    break;
-                case 2:
-                    PrinterGeneralMessagesUtils.printRedMessage("Please enter number of numbers and range like: 1 0 100");
-                    PrinterGeneralMessagesUtils.printYourChoice();
+                        getNewNumber(1 , left, right);
+                        break;
+                    case 2:
+                        PrinterGeneralMessagesUtils.printRedMessage("Please enter number of numbers and range like: 1 0 100");
+                        PrinterGeneralMessagesUtils.printYourChoice();
 
-                    option = ScannerGeneralMessages.getNewIntegerWithoutLine();
-                    left = ScannerGeneralMessages.getNewIntegerWithoutLine();
-                    right = ScannerGeneralMessages.getNewIntegerWithLine();
-                    PrinterGeneralMessagesUtils.skipText(1);
+                        option = ScannerGeneralMessages.getNewIntegerWithoutLine();
+                        left = ScannerGeneralMessages.getNewIntegerWithoutLine();
+                        right = ScannerGeneralMessages.getNewIntegerWithLine();
+                        PrinterGeneralMessagesUtils.skipText(1);
 
-                    getNewNumber(option, left, right);
-                    break;
-                case 3:
-                    publisher.publishEvent(new ExitRandomizerEvent(this));
-                    return;
+                        getNewNumber(option, left, right);
+                        break;
+                    case 3:
+                        publisher.publishEvent(new ExitRandomizerEvent(this));
+                        return;
 
-                default:
+                    default:
+                }
+            } catch (InputMismatchException e) {
+                PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+                ScannerGeneralMessages.skipLine();
             }
         }
     }

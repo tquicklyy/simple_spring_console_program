@@ -1,8 +1,8 @@
 package com.simple.spring.console.program.service;
 
+import com.simple.spring.console.program.bean.Randomizer;
 import com.simple.spring.console.program.event.ExitProgramEvent;
-import com.simple.spring.console.program.utils.PrinterMessages;
-import com.simple.spring.console.program.utils.ThreadUtils;
+import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
@@ -10,15 +10,18 @@ import org.springframework.stereotype.Service;
 public class FunctionsService {
 
     private final ApplicationEventPublisher publisher;
+    private final Randomizer randomizer;
 
-    public FunctionsService(ApplicationEventPublisher publisher) {
+    public FunctionsService(ApplicationEventPublisher publisher, Randomizer randomizer) {
         this.publisher = publisher;
+        this.randomizer = randomizer;
     }
 
-    public boolean execute(int option, Object object) {
+    public boolean execute(int option) {
         try {
             switch (option) {
                 case 1:
+                    randomizer.getOptions();
                     break;
                 case 2:
                     break;
@@ -31,7 +34,7 @@ public class FunctionsService {
                 case 6:
                     break;
                 case 7:
-                    exitProgram(object);
+                    exitProgram(this);
                     return false;
 
                 default:
@@ -43,7 +46,7 @@ public class FunctionsService {
     }
 
     private void exitProgram(Object object) throws InterruptedException {
-        PrinterMessages.printDefaultMessageForEvent();
+        PrinterGeneralMessagesUtils.printDefaultMessageForEvent();
         publisher.publishEvent(new ExitProgramEvent(object));
     }
 }

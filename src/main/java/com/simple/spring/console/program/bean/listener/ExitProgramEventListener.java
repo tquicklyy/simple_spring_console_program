@@ -1,8 +1,7 @@
 package com.simple.spring.console.program.bean.listener;
 
 import com.simple.spring.console.program.event.ExitProgramEvent;
-import com.simple.spring.console.program.utils.StringDesign;
-import com.simple.spring.console.program.utils.ThreadUtils;
+import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
@@ -15,7 +14,7 @@ public class ExitProgramEventListener {
 
     @EventListener(ExitProgramEvent.class)
     public void onEvent() throws InterruptedException {
-        LOG.info("{}The input option is closed {}", StringDesign.RED_COLOR, StringDesign.GREEN_COLOR);
+        PrinterGeneralMessagesUtils.printRedMessage("The input option is closed");
     }
 
 }

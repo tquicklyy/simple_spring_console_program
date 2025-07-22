@@ -1,6 +1,7 @@
 package com.simple.spring.console.program.bean;
 
-import com.simple.spring.console.program.event.ExitRandomizerEvent;
+import com.simple.spring.console.program.bean.listener.exit.Function;
+import com.simple.spring.console.program.event.exit.ExitRandomizerEvent;
 import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.utils.ScannerGeneralMessages;
 import com.simple.spring.console.program.utils.StringDesign;
@@ -15,7 +16,7 @@ import java.util.InputMismatchException;
 import java.util.Random;
 
 @Component
-public class Randomizer {
+public class Randomizer implements Function {
 
     private static final Logger LOG = LoggerFactory.getLogger(Randomizer.class);
 
@@ -23,7 +24,7 @@ public class Randomizer {
     private final String[] funcs;
     private final ApplicationEventPublisher publisher;
 
-    public Randomizer(@Value("#{'${app.calculator-funcs}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
+    public Randomizer(@Value("#{'${app.randomizer-funcs}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
         this.funcs = funcs;
         this.publisher = publisher;
     }
@@ -49,6 +50,7 @@ public class Randomizer {
         }
     }
 
+    @Override
     public void getOptions() {
         int option;
 
@@ -84,8 +86,6 @@ public class Randomizer {
                     case 3:
                         publisher.publishEvent(new ExitRandomizerEvent(this));
                         return;
-
-                    default:
                 }
             } catch (InputMismatchException e) {
                 PrinterGeneralMessagesUtils.printAboutIncorrectInput();

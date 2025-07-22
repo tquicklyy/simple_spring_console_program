@@ -18,7 +18,7 @@ public class PrinterGeneralMessagesUtils {
     }
 
     public static void printYourChoice() {
-        System.out.printf("%sYour choice: %s", StringDesign.RED_COLOR, StringDesign.GREEN_COLOR);
+        System.out.printf("%sYour choice: %s", StringDesign.PURPLE_COLOR, StringDesign.GREEN_COLOR);
     }
 
     public static void printAboutIncorrectInput() {

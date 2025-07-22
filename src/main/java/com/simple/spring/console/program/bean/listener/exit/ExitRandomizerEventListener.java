@@ -1,6 +1,6 @@
-package com.simple.spring.console.program.bean.listener;
+package com.simple.spring.console.program.bean.listener.exit;
 
-import com.simple.spring.console.program.event.ExitRandomizerEvent;
+import com.simple.spring.console.program.event.exit.ExitRandomizerEvent;
 import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
 import org.springframework.context.event.EventListener;
 

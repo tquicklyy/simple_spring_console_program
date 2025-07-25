@@ -4,6 +4,7 @@ import com.simple.spring.console.program.event.exit.ExitHeadAndTailsEvent;
 import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.utils.ScannerUtils;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,12 @@ public class HeadAndTails implements Function {
     @Override
     @PostConstruct
     public void postConstruct() { PrinterGeneralMessagesUtils.printRedMessage("Head and tails has been started"); }
+
+    @Override
+    @PreDestroy
+    public void preDestroy() {
+        PrinterGeneralMessagesUtils.printRedMessage("Head and tails has been closed!");
+    }
 
     @Override
     public void getOptions() {

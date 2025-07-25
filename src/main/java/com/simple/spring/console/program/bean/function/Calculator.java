@@ -4,6 +4,7 @@ import com.simple.spring.console.program.event.exit.ExitProgramEvent;
 import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.utils.ScannerUtils;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,12 @@ public class Calculator implements Function {
     @PostConstruct
     public void postConstruct() {
         PrinterGeneralMessagesUtils.printRedMessage("Calculator has been started!");
+    }
+
+    @Override
+    @PreDestroy
+    public void preDestroy() {
+        PrinterGeneralMessagesUtils.printRedMessage("Calculator has been closed!");
     }
 
     @Override

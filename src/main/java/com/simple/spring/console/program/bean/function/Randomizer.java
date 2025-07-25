@@ -5,6 +5,7 @@ import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.utils.ScannerUtils;
 import com.simple.spring.console.program.utils.StringDesign;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,12 @@ public class Randomizer implements Function {
     @PostConstruct
     public void postConstruct() {
         PrinterGeneralMessagesUtils.printRedMessage("Randomizer has been started!");
+    }
+
+    @Override
+    @PreDestroy
+    public void preDestroy() {
+        PrinterGeneralMessagesUtils.printRedMessage("Randomizer has been closed!");
     }
 
     public void getNewNumber(int limit, int left, int right) {

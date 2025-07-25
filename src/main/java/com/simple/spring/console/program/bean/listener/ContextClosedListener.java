@@ -1,5 +1,6 @@
 package com.simple.spring.console.program.bean.listener;
 
+import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.utils.StringDesign;
 import com.simple.spring.console.program.utils.ThreadUtils;
 import org.slf4j.Logger;
@@ -15,8 +16,8 @@ public class ContextClosedListener {
 
     @EventListener(ContextClosedEvent.class)
     public void onEvent() throws InterruptedException {
-        LOG.info("{}Starting context closing!{}", StringDesign.RED_COLOR, StringDesign.GREEN_COLOR);
+        PrinterGeneralMessagesUtils.printRedMessage("The context has started closing");
         Thread.sleep(ThreadUtils.TIME_TO_SLEEP);
-        LOG.info("{}Context is closed. Goodbye!{}", StringDesign.RED_COLOR, StringDesign.GREEN_COLOR);
+        PrinterGeneralMessagesUtils.printRedMessage("The context is starting to destroy all the beans");
     }
 }

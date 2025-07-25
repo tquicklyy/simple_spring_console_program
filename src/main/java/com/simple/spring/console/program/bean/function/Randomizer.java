@@ -1,9 +1,8 @@
-package com.simple.spring.console.program.bean;
+package com.simple.spring.console.program.bean.function;
 
-import com.simple.spring.console.program.bean.listener.exit.Function;
 import com.simple.spring.console.program.event.exit.ExitRandomizerEvent;
 import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
-import com.simple.spring.console.program.utils.ScannerGeneralMessages;
+import com.simple.spring.console.program.utils.ScannerUtils;
 import com.simple.spring.console.program.utils.StringDesign;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -29,9 +28,10 @@ public class Randomizer implements Function {
         this.publisher = publisher;
     }
 
+    @Override
     @PostConstruct
     public void postConstruct() {
-        PrinterGeneralMessagesUtils.printRedMessage("Randomizer is starting");
+        PrinterGeneralMessagesUtils.printRedMessage("Randomizer has been started!");
     }
 
     public void getNewNumber(int limit, int left, int right) {
@@ -58,7 +58,7 @@ public class Randomizer implements Function {
             PrinterGeneralMessagesUtils.printOptionsWithFuncs(funcs);
             try {
                 PrinterGeneralMessagesUtils.printYourChoice();
-                option = ScannerGeneralMessages.getNewIntegerWithLine();
+                option = ScannerUtils.getNewIntegerWithLine();
                 PrinterGeneralMessagesUtils.skipText(1);
 
                 switch (option) {
@@ -66,8 +66,8 @@ public class Randomizer implements Function {
                         PrinterGeneralMessagesUtils.printRedMessage("Please enter range like: 0 100");
                         PrinterGeneralMessagesUtils.printYourChoice();
 
-                        int left = ScannerGeneralMessages.getNewIntegerWithoutLine();
-                        int right = ScannerGeneralMessages.getNewIntegerWithLine();
+                        int left = ScannerUtils.getNewIntegerWithoutLine();
+                        int right = ScannerUtils.getNewIntegerWithLine();
                         PrinterGeneralMessagesUtils.skipText(1);
 
                         getNewNumber(1 , left, right);
@@ -76,9 +76,9 @@ public class Randomizer implements Function {
                         PrinterGeneralMessagesUtils.printRedMessage("Please enter number of numbers and range like: 1 0 100");
                         PrinterGeneralMessagesUtils.printYourChoice();
 
-                        option = ScannerGeneralMessages.getNewIntegerWithoutLine();
-                        left = ScannerGeneralMessages.getNewIntegerWithoutLine();
-                        right = ScannerGeneralMessages.getNewIntegerWithLine();
+                        option = ScannerUtils.getNewIntegerWithoutLine();
+                        left = ScannerUtils.getNewIntegerWithoutLine();
+                        right = ScannerUtils.getNewIntegerWithLine();
                         PrinterGeneralMessagesUtils.skipText(1);
 
                         getNewNumber(option, left, right);
@@ -89,7 +89,7 @@ public class Randomizer implements Function {
                 }
             } catch (InputMismatchException e) {
                 PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-                ScannerGeneralMessages.skipLine();
+                ScannerUtils.skipLine();
             }
         }
     }

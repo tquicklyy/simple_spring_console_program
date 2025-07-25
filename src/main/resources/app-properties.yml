@@ -6,3 +6,5 @@ app:
   randomizer-funcs: "Get new random number;Get few new random number;Go back"
 
   calculator-funcs: "Sum;Subtraction;Division;Multiplication;Reset score;Go back"
+
+  head-and-tails-funcs: "Flip;Go back"

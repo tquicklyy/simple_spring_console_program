@@ -1,9 +1,9 @@
-package com.simple.spring.console.program.bean;
+package com.simple.spring.console.program.bean.function;
 
-import com.simple.spring.console.program.bean.listener.exit.Function;
 import com.simple.spring.console.program.event.exit.ExitProgramEvent;
 import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
-import com.simple.spring.console.program.utils.ScannerGeneralMessages;
+import com.simple.spring.console.program.utils.ScannerUtils;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -23,6 +23,13 @@ public class Calculator implements Function {
         this.publisher = publisher;
     }
 
+
+    @Override
+    @PostConstruct
+    public void postConstruct() {
+        PrinterGeneralMessagesUtils.printRedMessage("Calculator has been started!");
+    }
+
     @Override
     public void getOptions() {
         int option;
@@ -34,7 +41,7 @@ public class Calculator implements Function {
 
             try {
                 PrinterGeneralMessagesUtils.printYourChoice();
-                option = ScannerGeneralMessages.getNewIntegerWithLine();
+                option = ScannerUtils.getNewIntegerWithLine();
                 PrinterGeneralMessagesUtils.skipText(1);
 
                 switch (option) {
@@ -68,7 +75,7 @@ public class Calculator implements Function {
 
             } catch (InputMismatchException e) {
                 PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-                ScannerGeneralMessages.skipLine();
+                ScannerUtils.skipLine();
             }
         }
     }
@@ -76,7 +83,7 @@ public class Calculator implements Function {
     private double printMessageForEnterNumber() {
         PrinterGeneralMessagesUtils.printRedMessage("Please enter number");
         PrinterGeneralMessagesUtils.printYourChoice();
-        return ScannerGeneralMessages.getNewIntegerWithLine();
+        return ScannerUtils.getNewIntegerWithLine();
     }
 
     private void sum(double number) {

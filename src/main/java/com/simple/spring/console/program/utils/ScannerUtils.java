@@ -2,7 +2,7 @@ package com.simple.spring.console.program.utils;
 
 import java.util.Scanner;
 
-public class ScannerGeneralMessages {
+public class ScannerUtils {
 
     public static Scanner SCANNER = new Scanner(System.in);
 

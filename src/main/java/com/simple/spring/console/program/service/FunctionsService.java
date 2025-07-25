@@ -1,7 +1,8 @@
 package com.simple.spring.console.program.service;
 
-import com.simple.spring.console.program.bean.Calculator;
-import com.simple.spring.console.program.bean.Randomizer;
+import com.simple.spring.console.program.bean.function.Calculator;
+import com.simple.spring.console.program.bean.function.HeadAndTails;
+import com.simple.spring.console.program.bean.function.Randomizer;
 import com.simple.spring.console.program.event.exit.ExitProgramEvent;
 import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
 import org.springframework.context.ApplicationEventPublisher;
@@ -13,11 +14,13 @@ public class FunctionsService {
     private final ApplicationEventPublisher publisher;
     private final Randomizer randomizer;
     private final Calculator calculator;
+    private final HeadAndTails headAndTails;
 
-    public FunctionsService(ApplicationEventPublisher publisher, Randomizer randomizer, Calculator calculator) {
+    public FunctionsService(ApplicationEventPublisher publisher, Randomizer randomizer, Calculator calculator, HeadAndTails headAndTails) {
         this.publisher = publisher;
         this.randomizer = randomizer;
         this.calculator = calculator;
+        this.headAndTails = headAndTails;
     }
 
     public boolean execute(int option) {
@@ -30,6 +33,7 @@ public class FunctionsService {
                     calculator.getOptions();
                     break;
                 case 3:
+                    headAndTails.getOptions();
                     break;
                 case 4:
                     break;

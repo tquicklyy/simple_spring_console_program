@@ -2,7 +2,7 @@ package com.simple.spring.console.program.bean;
 
 import com.simple.spring.console.program.service.FunctionsService;
 import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
-import com.simple.spring.console.program.utils.ScannerGeneralMessages;
+import com.simple.spring.console.program.utils.ScannerUtils;
 import com.simple.spring.console.program.utils.StringDesign;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class Program {
             PrinterGeneralMessagesUtils.printYourChoice();
 
             try {
-                option = ScannerGeneralMessages.getNewIntegerWithLine();
+                option = ScannerUtils.getNewIntegerWithLine();
 
                 PrinterGeneralMessagesUtils.skipText(1);
 
@@ -50,7 +50,7 @@ public class Program {
                 }
             } catch (InputMismatchException e) {
                 PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-                ScannerGeneralMessages.skipLine();
+                ScannerUtils.skipLine();
             }
         }
     }

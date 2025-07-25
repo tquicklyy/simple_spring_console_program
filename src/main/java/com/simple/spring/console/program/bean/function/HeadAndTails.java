@@ -1,8 +1,8 @@
 package com.simple.spring.console.program.bean.function;
 
 import com.simple.spring.console.program.event.exit.ExitHeadAndTailsEvent;
-import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
-import com.simple.spring.console.program.utils.ScannerUtils;
+import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
+import com.simple.spring.console.program.util.ScannerUtils;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,17 +13,18 @@ import java.util.InputMismatchException;
 import java.util.Random;
 
 @Component
-public class HeadAndTails implements Function {
+public class HeadAndTails extends Function {
 
     private static final String HEAD = "HEAD";
     private static final String TAIL = "TAIL";
 
-    private final String[] funcs;
-    private final ApplicationEventPublisher publisher;
-
     public HeadAndTails(@Value("#{'${app.head-and-tails-funcs}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
-        this.funcs = funcs;
-        this.publisher = publisher;
+        super(funcs, publisher);
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        this.beanName = name;
     }
 
     @Override
@@ -31,13 +32,7 @@ public class HeadAndTails implements Function {
     public void postConstruct() { PrinterGeneralMessagesUtils.printRedMessage("Head and tails has been started"); }
 
     @Override
-    @PreDestroy
-    public void preDestroy() {
-        PrinterGeneralMessagesUtils.printRedMessage("Head and tails has been closed!");
-    }
-
-    @Override
-    public void getOptions() {
+    public void startWork() {
         int option;
 
         while (true) {
@@ -48,19 +43,28 @@ public class HeadAndTails implements Function {
                 option = ScannerUtils.getNewIntegerWithLine();
                 PrinterGeneralMessagesUtils.skipText(1);
 
-                switch (option) {
-                    case 1:
-                        PrinterGeneralMessagesUtils.printRedMessage(String.format("Your side of the coin: %s", flipCoin()));
-                        break;
-                    case 2:
-                        publisher.publishEvent(ExitHeadAndTailsEvent.class);
-                        return;
+                if(!handleUserChoice(option)) {
+                    return;
                 }
             } catch (InputMismatchException e) {
                 PrinterGeneralMessagesUtils.printAboutIncorrectInput();
                 ScannerUtils.skipLine();
             }
         }
+    }
+
+    @Override
+    boolean handleUserChoice(Integer option) {
+        switch (option) {
+            case 1:
+                PrinterGeneralMessagesUtils.printRedMessage(String.format("Your side of the coin: %s", flipCoin()));
+                break;
+            case 2:
+                publisher.publishEvent(new ExitHeadAndTailsEvent(this));
+                return false;
+        }
+
+        return true;
     }
 
     private String flipCoin() {

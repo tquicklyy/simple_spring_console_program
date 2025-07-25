@@ -1,8 +1,9 @@
 package com.simple.spring.console.program.bean.function;
 
+import com.simple.spring.console.program.event.exit.ExitCalculatorEvent;
 import com.simple.spring.console.program.event.exit.ExitProgramEvent;
-import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
-import com.simple.spring.console.program.utils.ScannerUtils;
+import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
+import com.simple.spring.console.program.util.ScannerUtils;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,18 +13,18 @@ import org.springframework.stereotype.Component;
 import java.util.InputMismatchException;
 
 @Component
-public class Calculator implements Function {
+public class Calculator extends Function {
 
-    private double score = 0;
-
-    private final String[] funcs;
-    private final ApplicationEventPublisher publisher;
+    private double score;
 
     public Calculator(@Value("#{'${app.calculator-funcs}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
-        this.funcs = funcs;
-        this.publisher = publisher;
+        super(funcs, publisher);
     }
 
+    @Override
+    public void setBeanName(String name) {
+        this.beanName = name;
+    }
 
     @Override
     @PostConstruct
@@ -32,15 +33,9 @@ public class Calculator implements Function {
     }
 
     @Override
-    @PreDestroy
-    public void preDestroy() {
-        PrinterGeneralMessagesUtils.printRedMessage("Calculator has been closed!");
-    }
-
-    @Override
-    public void getOptions() {
+    public void startWork() {
         int option;
-        double number = 0;
+
 
         while (true) {
             PrinterGeneralMessagesUtils.printYellowMessage(String.format("Your current score: %.2f", score).replace(',', '.'));
@@ -51,33 +46,8 @@ public class Calculator implements Function {
                 option = ScannerUtils.getNewIntegerWithLine();
                 PrinterGeneralMessagesUtils.skipText(1);
 
-                switch (option) {
-                    case 1:
-                        number = printMessageForEnterNumber();
-                        sum(number);
-                        break;
-                    case 2:
-                        number = printMessageForEnterNumber();
-                        sub(number);
-                        break;
-                    case 3:
-                        number = printMessageForEnterNumber();
-                        divide(number);
-                        break;
-                    case 4:
-                        number = printMessageForEnterNumber();
-                        multiply(number);
-                        break;
-                    case 5:
-                        PrinterGeneralMessagesUtils.printRedMessage("Score has been reset");
-                        score = 0;
-                        break;
-                    case 6:
-                        publisher.publishEvent(ExitProgramEvent.class);
-                        return;
-
-                    default:
-                        PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+                if(!handleUserChoice(option)) {
+                    return;
                 }
 
             } catch (InputMismatchException e) {
@@ -85,6 +55,40 @@ public class Calculator implements Function {
                 ScannerUtils.skipLine();
             }
         }
+    }
+
+    @Override
+    boolean handleUserChoice(Integer option) {
+        double number = 0;
+
+        switch (option) {
+            case 1:
+                number = printMessageForEnterNumber();
+                sum(number);
+                break;
+            case 2:
+                number = printMessageForEnterNumber();
+                sub(number);
+                break;
+            case 3:
+                number = printMessageForEnterNumber();
+                divide(number);
+                break;
+            case 4:
+                number = printMessageForEnterNumber();
+                multiply(number);
+                break;
+            case 5:
+                PrinterGeneralMessagesUtils.printRedMessage("Score has been reset");
+                score = 0;
+                break;
+            case 6:
+                publisher.publishEvent(new ExitCalculatorEvent(this));
+                return false;
+            default:
+                PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+        }
+        return true;
     }
 
     private double printMessageForEnterNumber() {

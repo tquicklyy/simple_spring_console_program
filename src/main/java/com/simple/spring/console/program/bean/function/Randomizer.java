@@ -1,9 +1,9 @@
 package com.simple.spring.console.program.bean.function;
 
 import com.simple.spring.console.program.event.exit.ExitRandomizerEvent;
-import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
-import com.simple.spring.console.program.utils.ScannerUtils;
-import com.simple.spring.console.program.utils.StringDesign;
+import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
+import com.simple.spring.console.program.util.ScannerUtils;
+import com.simple.spring.console.program.util.StringDesign;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
@@ -16,29 +16,25 @@ import java.util.InputMismatchException;
 import java.util.Random;
 
 @Component
-public class Randomizer implements Function {
+public class Randomizer extends Function {
 
     private static final Logger LOG = LoggerFactory.getLogger(Randomizer.class);
 
     private int counter = 1;
-    private final String[] funcs;
-    private final ApplicationEventPublisher publisher;
 
     public Randomizer(@Value("#{'${app.randomizer-funcs}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
-        this.funcs = funcs;
-        this.publisher = publisher;
+        super(funcs, publisher);
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        this.beanName = name;
     }
 
     @Override
     @PostConstruct
     public void postConstruct() {
         PrinterGeneralMessagesUtils.printRedMessage("Randomizer has been started!");
-    }
-
-    @Override
-    @PreDestroy
-    public void preDestroy() {
-        PrinterGeneralMessagesUtils.printRedMessage("Randomizer has been closed!");
     }
 
     public void getNewNumber(int limit, int left, int right) {
@@ -58,7 +54,7 @@ public class Randomizer implements Function {
     }
 
     @Override
-    public void getOptions() {
+    public void startWork() {
         int option;
 
         while (true) {
@@ -68,32 +64,10 @@ public class Randomizer implements Function {
                 option = ScannerUtils.getNewIntegerWithLine();
                 PrinterGeneralMessagesUtils.skipText(1);
 
-                switch (option) {
-                    case 1:
-                        PrinterGeneralMessagesUtils.printRedMessage("Please enter range like: 0 100");
-                        PrinterGeneralMessagesUtils.printYourChoice();
-
-                        int left = ScannerUtils.getNewIntegerWithoutLine();
-                        int right = ScannerUtils.getNewIntegerWithLine();
-                        PrinterGeneralMessagesUtils.skipText(1);
-
-                        getNewNumber(1 , left, right);
-                        break;
-                    case 2:
-                        PrinterGeneralMessagesUtils.printRedMessage("Please enter number of numbers and range like: 1 0 100");
-                        PrinterGeneralMessagesUtils.printYourChoice();
-
-                        option = ScannerUtils.getNewIntegerWithoutLine();
-                        left = ScannerUtils.getNewIntegerWithoutLine();
-                        right = ScannerUtils.getNewIntegerWithLine();
-                        PrinterGeneralMessagesUtils.skipText(1);
-
-                        getNewNumber(option, left, right);
-                        break;
-                    case 3:
-                        publisher.publishEvent(new ExitRandomizerEvent(this));
-                        return;
+                if(!handleUserChoice(option)) {
+                    return;
                 }
+
             } catch (InputMismatchException e) {
                 PrinterGeneralMessagesUtils.printAboutIncorrectInput();
                 ScannerUtils.skipLine();
@@ -101,4 +75,34 @@ public class Randomizer implements Function {
         }
     }
 
+    @Override
+    boolean handleUserChoice(Integer option) {
+        switch (option) {
+            case 1:
+                PrinterGeneralMessagesUtils.printRedMessage("Please enter range like: 0 100");
+                PrinterGeneralMessagesUtils.printYourChoice();
+
+                int left = ScannerUtils.getNewIntegerWithoutLine();
+                int right = ScannerUtils.getNewIntegerWithLine();
+                PrinterGeneralMessagesUtils.skipText(1);
+
+                getNewNumber(1 , left, right);
+                break;
+            case 2:
+                PrinterGeneralMessagesUtils.printRedMessage("Please enter number of numbers and range like: 1 0 100");
+                PrinterGeneralMessagesUtils.printYourChoice();
+
+                option = ScannerUtils.getNewIntegerWithoutLine();
+                left = ScannerUtils.getNewIntegerWithoutLine();
+                right = ScannerUtils.getNewIntegerWithLine();
+                PrinterGeneralMessagesUtils.skipText(1);
+
+                getNewNumber(option, left, right);
+                break;
+            case 3:
+                publisher.publishEvent(new ExitRandomizerEvent(this));
+                return false;
+        }
+        return true;
+    }
 }

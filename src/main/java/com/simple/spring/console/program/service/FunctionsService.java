@@ -3,8 +3,9 @@ package com.simple.spring.console.program.service;
 import com.simple.spring.console.program.bean.function.Calculator;
 import com.simple.spring.console.program.bean.function.HeadAndTails;
 import com.simple.spring.console.program.bean.function.Randomizer;
+import com.simple.spring.console.program.bean.function.RockPaperScissors;
 import com.simple.spring.console.program.event.exit.ExitProgramEvent;
-import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
+import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
@@ -15,27 +16,30 @@ public class FunctionsService {
     private final Randomizer randomizer;
     private final Calculator calculator;
     private final HeadAndTails headAndTails;
+    private final RockPaperScissors rockPaperScissors;
 
-    public FunctionsService(ApplicationEventPublisher publisher, Randomizer randomizer, Calculator calculator, HeadAndTails headAndTails) {
+    public FunctionsService(ApplicationEventPublisher publisher, Randomizer randomizer, Calculator calculator, HeadAndTails headAndTails, RockPaperScissors rockPaperScissors) {
         this.publisher = publisher;
         this.randomizer = randomizer;
         this.calculator = calculator;
         this.headAndTails = headAndTails;
+        this.rockPaperScissors = rockPaperScissors;
     }
 
     public boolean execute(int option) {
         try {
             switch (option) {
                 case 1:
-                    randomizer.getOptions();
+                    randomizer.startWork();
                     break;
                 case 2:
-                    calculator.getOptions();
+                    calculator.startWork();
                     break;
                 case 3:
-                    headAndTails.getOptions();
+                    headAndTails.startWork();
                     break;
                 case 4:
+                    rockPaperScissors.startWork();
                     break;
                 case 5:
                     break;

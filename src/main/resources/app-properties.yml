@@ -8,3 +8,5 @@ app:
   calculator-funcs: "Sum;Subtraction;Division;Multiplication;Reset score;Go back"
 
   head-and-tails-funcs: "Flip;Go back"
+
+  rock-paper-scissors-funcs: "Play;Go back"

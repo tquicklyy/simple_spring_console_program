@@ -1,4 +1,4 @@
-package com.simple.spring.console.program.utils;
+package com.simple.spring.console.program.util;
 
 import java.util.Scanner;
 
@@ -14,6 +14,10 @@ public class ScannerUtils {
 
     public static int getNewIntegerWithoutLine() {
         return SCANNER.nextInt();
+    }
+
+    public static String getOneWord() {
+        return SCANNER.nextLine().replace(" ", "");
     }
 
     public static void skipLine() {

@@ -1,4 +1,4 @@
-package com.simple.spring.console.program.utils;
+package com.simple.spring.console.program.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

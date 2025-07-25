@@ -1,4 +1,4 @@
-package com.simple.spring.console.program.utils;
+package com.simple.spring.console.program.util;
 
 public class ThreadUtils {
 

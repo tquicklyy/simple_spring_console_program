@@ -1,6 +1,6 @@
 package com.simple.spring.console.program.bean.listener;
 
-import com.simple.spring.console.program.utils.PrinterGeneralMessagesUtils;
+import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;

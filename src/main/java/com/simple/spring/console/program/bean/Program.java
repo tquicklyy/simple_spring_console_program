@@ -7,7 +7,6 @@ import com.simple.spring.console.program.util.ScannerUtils;
 import com.simple.spring.console.program.util.StringDesign;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -56,7 +55,7 @@ public class Program {
                 }
             } catch (InputMismatchException e) {
                 PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-                ScannerUtils.skipLine();
+                ScannerUtils.getNextLine();
             }
         }
     }
@@ -66,7 +65,7 @@ public class Program {
     }
 
     private void printHelloMessage() {
-        PrinterGeneralMessagesUtils.skipText(1000);
+        PrinterGeneralMessagesUtils.skipText(50);
 
         LOG.info(""" 
                 {}{}

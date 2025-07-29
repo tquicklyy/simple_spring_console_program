@@ -15,14 +15,16 @@ public class FunctionsService {
     private final HeadAndTails headAndTails;
     private final RockPaperScissors rockPaperScissors;
     private final PasswordGenerator passwordGenerator;
+    private final LengthOfString lengthOfString;
 
-    public FunctionsService(ApplicationEventPublisher publisher, Randomizer randomizer, Calculator calculator, HeadAndTails headAndTails, RockPaperScissors rockPaperScissors, PasswordGenerator passwordGenerator) {
+    public FunctionsService(ApplicationEventPublisher publisher, Randomizer randomizer, Calculator calculator, HeadAndTails headAndTails, RockPaperScissors rockPaperScissors, PasswordGenerator passwordGenerator, LengthOfString lengthOfString) {
         this.publisher = publisher;
         this.randomizer = randomizer;
         this.calculator = calculator;
         this.headAndTails = headAndTails;
         this.rockPaperScissors = rockPaperScissors;
         this.passwordGenerator = passwordGenerator;
+        this.lengthOfString = lengthOfString;
     }
 
     public boolean execute(int option) {
@@ -44,6 +46,7 @@ public class FunctionsService {
                     passwordGenerator.startWork();
                     break;
                 case 6:
+                    lengthOfString.startWork();
                     break;
                 case 7:
                     exitProgram(this);

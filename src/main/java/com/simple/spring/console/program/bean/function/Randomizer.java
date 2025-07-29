@@ -5,7 +5,6 @@ import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.util.ScannerUtils;
 import com.simple.spring.console.program.util.StringDesign;
 import jakarta.annotation.PostConstruct;
-import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,11 +26,6 @@ public class Randomizer extends Function {
     }
 
     @Override
-    public void setBeanName(@NonNull String name) {
-        this.beanName = name;
-    }
-
-    @Override
     @PostConstruct
     protected void postConstruct() {
         PrinterGeneralMessagesUtils.printRedMessage("Randomizer has been started!");
@@ -50,28 +44,6 @@ public class Randomizer extends Function {
             PrinterGeneralMessagesUtils.printAboutIncorrectInput();
         } finally {
             PrinterGeneralMessagesUtils.printYellowMessage("Ending the enumeration of numbers");
-        }
-    }
-
-    @Override
-    public void startWork() {
-        int option;
-
-        while (true) {
-            PrinterGeneralMessagesUtils.printOptionsWithFuncs(funcs);
-            try {
-                PrinterGeneralMessagesUtils.printYourChoice();
-                option = ScannerUtils.getNewIntegerWithLine();
-                PrinterGeneralMessagesUtils.skipText(1);
-
-                if(!handleUserChoice(option)) {
-                    return;
-                }
-
-            } catch (InputMismatchException e) {
-                PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-                ScannerUtils.skipLine();
-            }
         }
     }
 
@@ -113,7 +85,7 @@ public class Randomizer extends Function {
             }
         } catch (InputMismatchException e) {
             PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-            ScannerUtils.skipLine();
+            ScannerUtils.getNextLine();
             handleUserChoice(option);
         }
         return true;

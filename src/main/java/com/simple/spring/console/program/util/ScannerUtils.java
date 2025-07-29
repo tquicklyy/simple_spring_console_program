@@ -20,8 +20,8 @@ public class ScannerUtils {
         return SCANNER.nextLine().replace(" ", "");
     }
 
-    public static void skipLine() {
-        SCANNER.nextLine();
+    public static String getNextLine() {
+        return SCANNER.nextLine();
     }
 
 }

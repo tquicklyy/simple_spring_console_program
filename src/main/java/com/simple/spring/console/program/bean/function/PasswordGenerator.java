@@ -4,7 +4,6 @@ import com.simple.spring.console.program.event.exit.ExitPasswordGeneratorEvent;
 import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.util.ScannerUtils;
 import jakarta.annotation.PostConstruct;
-import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -28,33 +27,9 @@ public class PasswordGenerator extends Function {
     }
 
     @Override
-    public void setBeanName(@NonNull String name) {
-        this.beanName = name;
-    }
-
-    @Override
     @PostConstruct
     protected void postConstruct() {
         PrinterGeneralMessagesUtils.printRedMessage("Password Generator has been started!");
-    }
-
-    @Override
-    public void startWork() {
-        int option;
-
-        while (true) {
-            PrinterGeneralMessagesUtils.printOptionsWithFuncs(funcs);
-            try {
-                PrinterGeneralMessagesUtils.printYourChoice();
-                option = ScannerUtils.getNewIntegerWithLine();
-                PrinterGeneralMessagesUtils.skipText(1);
-
-                if(!handleUserChoice(option)) return;
-            } catch (InputMismatchException e) {
-                PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-                ScannerUtils.skipLine();
-            }
-        }
     }
 
     @Override
@@ -72,7 +47,7 @@ public class PasswordGenerator extends Function {
                     PrinterGeneralMessagesUtils.printRedMessage(String.format("Your password: %s", generate(length)));
                 } catch (InputMismatchException e) {
                     PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-                    ScannerUtils.skipLine();
+                    ScannerUtils.getNextLine();
                     handleUserChoice(option);
                 } catch (IllegalArgumentException e) {
                     PrinterGeneralMessagesUtils.printAboutIncorrectInput();

@@ -4,7 +4,6 @@ import com.simple.spring.console.program.event.exit.ExitCalculatorEvent;
 import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.util.ScannerUtils;
 import jakarta.annotation.PostConstruct;
-import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -18,11 +17,6 @@ public class Calculator extends Function {
 
     public Calculator(@Value("#{'${app.funcs.calculator}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
         super(funcs, publisher);
-    }
-
-    @Override
-    public void setBeanName(@NonNull String name) {
-        this.beanName = name;
     }
 
     @Override
@@ -48,7 +42,7 @@ public class Calculator extends Function {
 
             } catch (InputMismatchException e) {
                 PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-                ScannerUtils.skipLine();
+                ScannerUtils.getNextLine();
             }
         }
     }
@@ -69,6 +63,7 @@ public class Calculator extends Function {
                     break;
                 case 3:
                     number = printMessageForEnterNumber();
+                    if (number == 0) throw new IllegalArgumentException();
                     divide(number);
                     break;
                 case 4:
@@ -88,7 +83,10 @@ public class Calculator extends Function {
             }
         } catch (InputMismatchException e) {
             PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-            ScannerUtils.skipLine();
+            ScannerUtils.getNextLine();
+            handleUserChoice(option);
+        } catch (IllegalArgumentException e) {
+            PrinterGeneralMessagesUtils.printAboutIncorrectInput();
             handleUserChoice(option);
         }
         return true;

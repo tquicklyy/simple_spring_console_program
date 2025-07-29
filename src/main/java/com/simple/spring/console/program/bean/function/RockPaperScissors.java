@@ -39,36 +39,9 @@ public class RockPaperScissors extends Function {
     }
 
     @Override
-    public void setBeanName(@NonNull String name) {
-        this.beanName = name;
-    }
-
-    @Override
     @PostConstruct
     protected void postConstruct() {
         PrinterGeneralMessagesUtils.printRedMessage("Rock, paper, scissors has been started!");
-    }
-
-    @Override
-    public void startWork() {
-        int option;
-
-        while (true) {
-            PrinterGeneralMessagesUtils.printOptionsWithFuncs(funcs);
-            try {
-                PrinterGeneralMessagesUtils.printYourChoice();
-                option = ScannerUtils.getNewIntegerWithLine();
-                PrinterGeneralMessagesUtils.skipText(1);
-
-                if(!handleUserChoice(option)) {
-                    return;
-                }
-
-            } catch (InputMismatchException e) {
-                PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-                ScannerUtils.skipLine();
-            }
-        }
     }
 
     @Override

@@ -26,6 +26,7 @@ public class WorkTime implements BeanNameAware {
 
     @PostConstruct
     private void startTimeWork() {
+        PrinterGeneralMessagesUtils.printRedMessage("Work time has been started!");
         executor.execute(() -> {
             while (true) {
                 try {

@@ -10,12 +10,12 @@ public class ExitEventListenersLogging {
 
     @EventListener(ExitCalculatorEvent.class)
     public void onCalculatorEvent() {
-        PrinterGeneralMessagesUtils.printRedMessage("Exit the calculator");
+        PrinterGeneralMessagesUtils.printRedMessage("Exiting the calculator");
     }
 
     @EventListener(ExitRandomizerEvent.class)
     public void onRandomizerEvent() {
-        PrinterGeneralMessagesUtils.printRedMessage("Exit the randomizer");
+        PrinterGeneralMessagesUtils.printRedMessage("Exiting the randomizer");
     }
 
     @EventListener(ExitHeadAndTailsEvent.class)
@@ -30,7 +30,12 @@ public class ExitEventListenersLogging {
 
     @EventListener(ExitPasswordGeneratorEvent.class)
     public void onPasswordGeneratorEvent() {
-        PrinterGeneralMessagesUtils.printRedMessage("Exit the password generator");
+        PrinterGeneralMessagesUtils.printRedMessage("Exiting the password generator");
+    }
+
+    @EventListener(ExitLengthOfStringEvent.class)
+    public void onLengthOfStringEvent() {
+        PrinterGeneralMessagesUtils.printRedMessage("Closing the app that calculating length of a string");
     }
 
     @EventListener(ExitProgramEvent.class)

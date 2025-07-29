@@ -2,13 +2,11 @@ package com.simple.spring.console.program.bean.function;
 
 import com.simple.spring.console.program.event.exit.ExitHeadAndTailsEvent;
 import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
-import com.simple.spring.console.program.util.ScannerUtils;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import java.util.InputMismatchException;
 import java.util.Random;
 
 @Component
@@ -22,35 +20,8 @@ public class HeadAndTails extends Function {
     }
 
     @Override
-    public void setBeanName(String name) {
-        this.beanName = name;
-    }
-
-    @Override
     @PostConstruct
     protected void postConstruct() { PrinterGeneralMessagesUtils.printRedMessage("Head and tails has been started"); }
-
-    @Override
-    public void startWork() {
-        int option;
-
-        while (true) {
-            PrinterGeneralMessagesUtils.printOptionsWithFuncs(funcs);
-
-            try {
-                PrinterGeneralMessagesUtils.printYourChoice();
-                option = ScannerUtils.getNewIntegerWithLine();
-                PrinterGeneralMessagesUtils.skipText(1);
-
-                if(!handleUserChoice(option)) {
-                    return;
-                }
-            } catch (InputMismatchException e) {
-                PrinterGeneralMessagesUtils.printAboutIncorrectInput();
-                ScannerUtils.skipLine();
-            }
-        }
-    }
 
     @Override
     boolean handleUserChoice(Integer option) {

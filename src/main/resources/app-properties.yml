@@ -13,3 +13,5 @@ app:
     rock-paper-scissors: "Play;Go back"
 
     password-generator: "Generate;Go back"
+
+    length-of-string: "Get length;Go back"

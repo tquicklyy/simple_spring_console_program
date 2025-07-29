@@ -33,6 +33,7 @@ public class WorkTime implements BeanNameAware {
                     timeWork++;
                 } catch (InterruptedException e) {
                     PrinterGeneralMessagesUtils.printRedMessage("The timer is notified about the stop!");
+                    break;
                 }
             }
         });

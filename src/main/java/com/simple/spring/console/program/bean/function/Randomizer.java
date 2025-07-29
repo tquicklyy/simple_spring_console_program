@@ -5,7 +5,7 @@ import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.util.ScannerUtils;
 import com.simple.spring.console.program.util.StringDesign;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,18 +22,18 @@ public class Randomizer extends Function {
 
     private int counter = 1;
 
-    public Randomizer(@Value("#{'${app.randomizer-funcs}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
+    public Randomizer(@Value("#{'${app.funcs.randomizer}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
         super(funcs, publisher);
     }
 
     @Override
-    public void setBeanName(String name) {
+    public void setBeanName(@NonNull String name) {
         this.beanName = name;
     }
 
     @Override
     @PostConstruct
-    public void postConstruct() {
+    protected void postConstruct() {
         PrinterGeneralMessagesUtils.printRedMessage("Randomizer has been started!");
     }
 
@@ -77,31 +77,44 @@ public class Randomizer extends Function {
 
     @Override
     boolean handleUserChoice(Integer option) {
-        switch (option) {
-            case 1:
-                PrinterGeneralMessagesUtils.printRedMessage("Please enter range like: 0 100");
-                PrinterGeneralMessagesUtils.printYourChoice();
+        try {
+            int left, right;
+            switch (option) {
+                case 1:
+                    PrinterGeneralMessagesUtils.printRedMessage("Please enter range like: 0 100");
+                    PrinterGeneralMessagesUtils.printYourChoice();
 
-                int left = ScannerUtils.getNewIntegerWithoutLine();
-                int right = ScannerUtils.getNewIntegerWithLine();
-                PrinterGeneralMessagesUtils.skipText(1);
+                    left = ScannerUtils.getNewIntegerWithoutLine();
+                    right = ScannerUtils.getNewIntegerWithLine();
+                    PrinterGeneralMessagesUtils.skipText(1);
 
-                getNewNumber(1 , left, right);
-                break;
-            case 2:
-                PrinterGeneralMessagesUtils.printRedMessage("Please enter number of numbers and range like: 1 0 100");
-                PrinterGeneralMessagesUtils.printYourChoice();
+                    getNewNumber(1 , left, right);
+                    break;
+                case 2:
+                    PrinterGeneralMessagesUtils.printRedMessage("Please enter number of numbers and range like: 2 0 100 (at least 2 number)");
+                    PrinterGeneralMessagesUtils.printYourChoice();
 
-                option = ScannerUtils.getNewIntegerWithoutLine();
-                left = ScannerUtils.getNewIntegerWithoutLine();
-                right = ScannerUtils.getNewIntegerWithLine();
-                PrinterGeneralMessagesUtils.skipText(1);
+                    int count = ScannerUtils.getNewIntegerWithoutLine();
+                    if(count < 2) {
+                        throw new InputMismatchException();
+                    }
+                    left = ScannerUtils.getNewIntegerWithoutLine();
+                    right = ScannerUtils.getNewIntegerWithLine();
+                    PrinterGeneralMessagesUtils.skipText(1);
 
-                getNewNumber(option, left, right);
-                break;
-            case 3:
-                publisher.publishEvent(new ExitRandomizerEvent(this));
-                return false;
+                    getNewNumber(count, left, right);
+                    break;
+                case 3:
+                    publisher.publishEvent(new ExitRandomizerEvent(this));
+                    return false;
+                default:
+                    PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+                    break;
+            }
+        } catch (InputMismatchException e) {
+            PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+            ScannerUtils.skipLine();
+            handleUserChoice(option);
         }
         return true;
     }

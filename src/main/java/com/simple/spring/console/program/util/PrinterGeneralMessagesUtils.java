@@ -40,6 +40,10 @@ public class PrinterGeneralMessagesUtils {
         System.out.println(StringDesign.GREEN_COLOR);
     }
 
+    /**
+     *
+     * The method outputs the specified number of empty lines
+     */
     public static void skipText(int count) {
         for (int i = 0; i < count; i++) System.out.println();
     }

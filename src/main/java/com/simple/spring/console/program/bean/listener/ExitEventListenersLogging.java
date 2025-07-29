@@ -28,6 +28,11 @@ public class ExitEventListenersLogging {
         PrinterGeneralMessagesUtils.printRedMessage("Game \"Rock, paper, scissors\" has been closed");
     }
 
+    @EventListener(ExitPasswordGeneratorEvent.class)
+    public void onPasswordGeneratorEvent() {
+        PrinterGeneralMessagesUtils.printRedMessage("Exit the password generator");
+    }
+
     @EventListener(ExitProgramEvent.class)
     public void onProgramEvent() throws InterruptedException {
         PrinterGeneralMessagesUtils.printRedMessage("The input option has been closed");

@@ -6,6 +6,7 @@ import com.simple.spring.console.program.util.ScannerUtils;
 import com.simple.spring.console.program.util.StringDesign;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,12 @@ import java.util.InputMismatchException;
 
 
 @Component
-public class Program {
+public class Program implements BeanNameAware {
+
+    @Override
+    public void setBeanName(String name) {
+
+    }
 
     private final static Logger LOG = LoggerFactory.getLogger(Program.class);
 
@@ -22,7 +28,7 @@ public class Program {
     private final FunctionsService service;
     private final String[] funcs;
 
-    public Program(@Value("${app.name}") String appName, FunctionsService service, @Value("#{'${app.main-funcs}'.split(';')}") String[] funcs) {
+    public Program(@Value("${app.name}") String appName, FunctionsService service, @Value("#{'${app.funcs.main}'.split(';')}") String[] funcs) {
         this.appName = appName;
         this.service = service;
         this.funcs = funcs;

@@ -5,7 +5,7 @@ import com.simple.spring.console.program.event.exit.ExitRockPaperScissorsEvent;
 import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.util.ScannerUtils;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -34,24 +34,24 @@ public class RockPaperScissors extends Function {
             ChoicesInGame.PAPER, ChoicesInGame.ROCK, ChoicesInGame.SCISSORS
     };
 
-    public RockPaperScissors(@Value("#{'${app.rock-paper-scissors-funcs}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
+    public RockPaperScissors(@Value("#{'${app.funcs.rock-paper-scissors}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
         super(funcs, publisher);
     }
 
     @Override
-    public void setBeanName(String name) {
+    public void setBeanName(@NonNull String name) {
         this.beanName = name;
     }
 
     @Override
     @PostConstruct
-    public void postConstruct() {
+    protected void postConstruct() {
         PrinterGeneralMessagesUtils.printRedMessage("Rock, paper, scissors has been started!");
     }
 
     @Override
     public void startWork() {
-        int option = 0;
+        int option;
 
         while (true) {
             PrinterGeneralMessagesUtils.printOptionsWithFuncs(funcs);
@@ -83,12 +83,14 @@ public class RockPaperScissors extends Function {
                 case 2:
                     publisher.publishEvent(new ExitRockPaperScissorsEvent(this));
                     return false;
+                default:
+                    PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+                    break;
             }
         } catch (IllegalArgumentException e) {
             PrinterGeneralMessagesUtils.printAboutIncorrectInput();
             handleUserChoice(option);
         }
-
         return true;
     }
 

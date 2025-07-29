@@ -4,7 +4,6 @@ import com.simple.spring.console.program.event.exit.ExitHeadAndTailsEvent;
 import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.util.ScannerUtils;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,7 @@ public class HeadAndTails extends Function {
     private static final String HEAD = "HEAD";
     private static final String TAIL = "TAIL";
 
-    public HeadAndTails(@Value("#{'${app.head-and-tails-funcs}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
+    public HeadAndTails(@Value("#{'${app.funcs.head-and-tails}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
         super(funcs, publisher);
     }
 
@@ -29,7 +28,7 @@ public class HeadAndTails extends Function {
 
     @Override
     @PostConstruct
-    public void postConstruct() { PrinterGeneralMessagesUtils.printRedMessage("Head and tails has been started"); }
+    protected void postConstruct() { PrinterGeneralMessagesUtils.printRedMessage("Head and tails has been started"); }
 
     @Override
     public void startWork() {
@@ -62,6 +61,9 @@ public class HeadAndTails extends Function {
             case 2:
                 publisher.publishEvent(new ExitHeadAndTailsEvent(this));
                 return false;
+            default:
+                PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+                break;
         }
 
         return true;

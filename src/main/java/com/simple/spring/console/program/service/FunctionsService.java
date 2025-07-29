@@ -1,9 +1,6 @@
 package com.simple.spring.console.program.service;
 
-import com.simple.spring.console.program.bean.function.Calculator;
-import com.simple.spring.console.program.bean.function.HeadAndTails;
-import com.simple.spring.console.program.bean.function.Randomizer;
-import com.simple.spring.console.program.bean.function.RockPaperScissors;
+import com.simple.spring.console.program.bean.function.*;
 import com.simple.spring.console.program.event.exit.ExitProgramEvent;
 import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
 import org.springframework.context.ApplicationEventPublisher;
@@ -17,13 +14,15 @@ public class FunctionsService {
     private final Calculator calculator;
     private final HeadAndTails headAndTails;
     private final RockPaperScissors rockPaperScissors;
+    private final PasswordGenerator passwordGenerator;
 
-    public FunctionsService(ApplicationEventPublisher publisher, Randomizer randomizer, Calculator calculator, HeadAndTails headAndTails, RockPaperScissors rockPaperScissors) {
+    public FunctionsService(ApplicationEventPublisher publisher, Randomizer randomizer, Calculator calculator, HeadAndTails headAndTails, RockPaperScissors rockPaperScissors, PasswordGenerator passwordGenerator) {
         this.publisher = publisher;
         this.randomizer = randomizer;
         this.calculator = calculator;
         this.headAndTails = headAndTails;
         this.rockPaperScissors = rockPaperScissors;
+        this.passwordGenerator = passwordGenerator;
     }
 
     public boolean execute(int option) {
@@ -42,14 +41,15 @@ public class FunctionsService {
                     rockPaperScissors.startWork();
                     break;
                 case 5:
+                    passwordGenerator.startWork();
                     break;
                 case 6:
                     break;
                 case 7:
                     exitProgram(this);
                     return false;
-
                 default:
+                    PrinterGeneralMessagesUtils.printAboutIncorrectInput();
             }
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());

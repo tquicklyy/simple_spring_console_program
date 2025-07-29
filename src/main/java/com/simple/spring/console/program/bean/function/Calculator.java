@@ -1,11 +1,10 @@
 package com.simple.spring.console.program.bean.function;
 
 import com.simple.spring.console.program.event.exit.ExitCalculatorEvent;
-import com.simple.spring.console.program.event.exit.ExitProgramEvent;
 import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.util.ScannerUtils;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -17,25 +16,24 @@ public class Calculator extends Function {
 
     private double score;
 
-    public Calculator(@Value("#{'${app.calculator-funcs}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
+    public Calculator(@Value("#{'${app.funcs.calculator}'.split(';')}") String[] funcs, ApplicationEventPublisher publisher) {
         super(funcs, publisher);
     }
 
     @Override
-    public void setBeanName(String name) {
+    public void setBeanName(@NonNull String name) {
         this.beanName = name;
     }
 
     @Override
     @PostConstruct
-    public void postConstruct() {
+    protected void postConstruct() {
         PrinterGeneralMessagesUtils.printRedMessage("Calculator has been started!");
     }
 
     @Override
     public void startWork() {
         int option;
-
 
         while (true) {
             PrinterGeneralMessagesUtils.printYellowMessage(String.format("Your current score: %.2f", score).replace(',', '.'));
@@ -46,9 +44,7 @@ public class Calculator extends Function {
                 option = ScannerUtils.getNewIntegerWithLine();
                 PrinterGeneralMessagesUtils.skipText(1);
 
-                if(!handleUserChoice(option)) {
-                    return;
-                }
+                if(!handleUserChoice(option)) return;
 
             } catch (InputMismatchException e) {
                 PrinterGeneralMessagesUtils.printAboutIncorrectInput();
@@ -59,34 +55,41 @@ public class Calculator extends Function {
 
     @Override
     boolean handleUserChoice(Integer option) {
-        double number = 0;
+        double number;
 
-        switch (option) {
-            case 1:
-                number = printMessageForEnterNumber();
-                sum(number);
-                break;
-            case 2:
-                number = printMessageForEnterNumber();
-                sub(number);
-                break;
-            case 3:
-                number = printMessageForEnterNumber();
-                divide(number);
-                break;
-            case 4:
-                number = printMessageForEnterNumber();
-                multiply(number);
-                break;
-            case 5:
-                PrinterGeneralMessagesUtils.printRedMessage("Score has been reset");
-                score = 0;
-                break;
-            case 6:
-                publisher.publishEvent(new ExitCalculatorEvent(this));
-                return false;
-            default:
-                PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+        try {
+            switch (option) {
+                case 1:
+                    number = printMessageForEnterNumber();
+                    sum(number);
+                    break;
+                case 2:
+                    number = printMessageForEnterNumber();
+                    sub(number);
+                    break;
+                case 3:
+                    number = printMessageForEnterNumber();
+                    divide(number);
+                    break;
+                case 4:
+                    number = printMessageForEnterNumber();
+                    multiply(number);
+                    break;
+                case 5:
+                    PrinterGeneralMessagesUtils.printRedMessage("Score has been reset");
+                    score = 0;
+                    break;
+                case 6:
+                    publisher.publishEvent(new ExitCalculatorEvent(this));
+                    return false;
+                default:
+                    PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+                    break;
+            }
+        } catch (InputMismatchException e) {
+            PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+            ScannerUtils.skipLine();
+            handleUserChoice(option);
         }
         return true;
     }

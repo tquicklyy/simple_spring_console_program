@@ -1,12 +1,15 @@
 app:
   name: Simple spring console program
 
-  main-funcs: "Randomizer;Calculator;Head and Tails;Rock, paper, scissors;Password generator;Get length of string;Exit program"
+  funcs:
+    main: "Randomizer;Calculator;Head and Tails;Rock, paper, scissors;Password generator;Get length of string;Exit program"
 
-  randomizer-funcs: "Get new random number;Get few new random number;Go back"
+    randomizer: "Get new random number;Get few new random number;Go back"
 
-  calculator-funcs: "Sum;Subtraction;Division;Multiplication;Reset score;Go back"
+    calculator: "Sum;Subtraction;Division;Multiplication;Reset score;Go back"
 
-  head-and-tails-funcs: "Flip;Go back"
+    head-and-tails: "Flip;Go back"
 
-  rock-paper-scissors-funcs: "Play;Go back"
+    rock-paper-scissors: "Play;Go back"
+
+    password-generator: "Generate;Go back"

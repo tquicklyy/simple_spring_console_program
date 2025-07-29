@@ -18,15 +18,14 @@ public abstract class Function implements BeanNameAware {
     }
 
     @PostConstruct
-    abstract void postConstruct();
+    protected abstract void postConstruct();
 
     @PreDestroy
-    void preDestroy() {
+    protected void preDestroy() {
         PrinterGeneralMessagesUtils.printRedMessage(String.format("Bean with name «%s» has been closed!", beanName));
-    };
+    }
 
-    abstract void startWork();
+    public abstract void startWork();
 
     abstract boolean handleUserChoice(Integer option);
-
 }

@@ -1,5 +1,6 @@
 package com.simple.spring.console.program.bean;
 
+import com.simple.spring.console.program.bean.function.WorkTime;
 import com.simple.spring.console.program.service.FunctionsService;
 import com.simple.spring.console.program.util.PrinterGeneralMessagesUtils;
 import com.simple.spring.console.program.util.ScannerUtils;
@@ -15,23 +16,21 @@ import java.util.InputMismatchException;
 
 
 @Component
-public class Program implements BeanNameAware {
-
-    @Override
-    public void setBeanName(String name) {
-
-    }
+public class Program {
 
     private final static Logger LOG = LoggerFactory.getLogger(Program.class);
 
     private final String appName;
-    private final FunctionsService service;
     private final String[] funcs;
 
-    public Program(@Value("${app.name}") String appName, FunctionsService service, @Value("#{'${app.funcs.main}'.split(';')}") String[] funcs) {
+    private final WorkTime workTime;
+    private final FunctionsService service;
+
+    public Program(@Value("${app.name}") String appName, FunctionsService service, @Value("#{'${app.funcs.main}'.split(';')}") String[] funcs, WorkTime workTime) {
         this.appName = appName;
         this.service = service;
         this.funcs = funcs;
+        this.workTime = workTime;
     }
 
     public void startProgram() {
@@ -43,6 +42,7 @@ public class Program implements BeanNameAware {
         int option = 0;
 
         while(true) {
+            workTime.printTimeOfWork();
             PrinterGeneralMessagesUtils.printOptionsWithFuncs(funcs);
             PrinterGeneralMessagesUtils.printYourChoice();
 

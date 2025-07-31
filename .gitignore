@@ -37,3 +37,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Spring Boot ###
+messages_for_spring_boot/

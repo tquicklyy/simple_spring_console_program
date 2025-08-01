@@ -12,15 +12,9 @@ import org.springframework.stereotype.Component;
 public class ConsolePromptProvider implements PromptProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConsolePromptProvider.class);
-    private final WorkTime workTime;
-
-    public ConsolePromptProvider(WorkTime workTime) {
-        this.workTime = workTime;
-    }
 
     @Override
     public AttributedString getPrompt() {
-        workTime.printTimeOfWork();
-        return new AttributedString("shell:>", AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN));
+        return new AttributedString("_shell_:>", AttributedStyle.BOLD.foreground(AttributedStyle.GREEN));
     }
 }

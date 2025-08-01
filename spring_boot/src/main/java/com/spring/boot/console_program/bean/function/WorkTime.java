@@ -5,13 +5,14 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.stereotype.Component;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Component
+@ShellComponent
 public class WorkTime implements BeanNameAware {
 
     private String beanName;
@@ -24,6 +25,11 @@ public class WorkTime implements BeanNameAware {
     });
 
     private static int timeWork = 1;
+
+    @ShellMethod(key = "time", value = "Get work time")
+    public void getWorkTime() {
+        printTimeOfWork();
+    }
 
     @Override
     public void setBeanName(@Nonnull String name) {

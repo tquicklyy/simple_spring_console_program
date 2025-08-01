@@ -7,8 +7,12 @@ public class PrinterGeneralMessagesUtils {
     
     private static final Logger LOG = LoggerFactory.getLogger(PrinterGeneralMessagesUtils.class);
 
-    public static void printRedMessage(String text) {
+    public static void printMessage(String text) {
         LOG.info(text);
+    }
+
+    public static void printRedMessage(String text) {
+        LOG.info("{}{}{}", StringDesign.RED_COLOR, text, StringDesign.GREEN_COLOR);
         PrinterGeneralMessagesUtils.skipText(1);
     }
 
@@ -43,10 +47,10 @@ public class PrinterGeneralMessagesUtils {
     }
 
     public static void printOptionsWithFuncs(String[] funcs) {
-        for (int i = 0; i < funcs.length; i++) {
-            LOG.info("{}: {}",
-                    i + 1,
-                    funcs[i]);
+        LOG.info("Available methods for this function:");
+        for (String func : funcs) {
+            LOG.info("➤ {}",
+                    func);
         }
         skipText(1);
     }

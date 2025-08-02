@@ -6,13 +6,13 @@ import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.BeanNameAware;
 
 
-public abstract class Lifecycle implements BeanNameAware {
+public abstract class Function implements BeanNameAware {
 
     protected String beanName;
     protected final String[] funcs;
     protected final String description;
 
-    protected Lifecycle(String[] funcs, String description) {
+    protected Function(String[] funcs, String description) {
         this.funcs = funcs;
         this.description = description;
     }

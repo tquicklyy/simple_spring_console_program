@@ -1,6 +1,5 @@
 package com.spring.boot.console_program.bean.function;
 
-import com.spring.boot.console_program.bean.State;
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.shell.standard.ShellCommandGroup;
@@ -10,7 +9,7 @@ import org.springframework.shell.standard.ShellOption;
 
 @ShellComponent
 @ShellCommandGroup("Calculator Commands")
-public class Calculator extends Lifecycle {
+public class Calculator extends Function {
 
     private double score;
 
@@ -67,6 +66,7 @@ public class Calculator extends Lifecycle {
         } else PrinterGeneralMessagesUtils.printRedMessage("State is different from «CALCULATOR»");
     }
 
+    @Override
     @ShellMethod(key = "cr_info", value = "Info about calculator")
     public void getInfo() {
         if (State.getStatus() == State.Status.CALCULATOR) {

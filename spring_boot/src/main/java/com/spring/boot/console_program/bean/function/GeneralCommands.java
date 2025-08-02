@@ -1,6 +1,5 @@
 package com.spring.boot.console_program.bean.function;
 
-import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +9,7 @@ import org.springframework.shell.standard.ShellMethod;
 
 @ShellComponent
 @ShellCommandGroup("General Commands")
-public class GeneralCommands extends Lifecycle{
+public class GeneralCommands extends Function {
 
     private static final Logger LOG = LoggerFactory.getLogger(GeneralCommands.class);
     private final String appName;
@@ -23,8 +22,8 @@ public class GeneralCommands extends Lifecycle{
         this.appName = appName;
     }
 
-    @ShellMethod(key = "app_info", value = "Info about the application")
     @Override
+    @ShellMethod(key = "app_info", value = "Info about the application")
     public void getInfo() {
         super.getInfo();
     }

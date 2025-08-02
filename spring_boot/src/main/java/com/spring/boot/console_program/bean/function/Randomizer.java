@@ -1,6 +1,5 @@
 package com.spring.boot.console_program.bean.function;
 
-import com.spring.boot.console_program.bean.State;
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,7 @@ import java.util.Random;
 
 @ShellComponent
 @ShellCommandGroup("Randomizer Commands")
-public class Randomizer extends Lifecycle {
+public class Randomizer extends Function {
 
     private int counter = 1;
     private static final Logger LOG = LoggerFactory.getLogger(Randomizer.class);
@@ -22,6 +21,8 @@ public class Randomizer extends Lifecycle {
     public Randomizer(@Value("${app.funcs.randomizer}") String[] funcs, @Value("${app.description.randomizer}") String description) {
         super(funcs, description);
     }
+
+
 
     @ShellMethod(key = "rr_numbers", value = "Generate random numbers")
     public void getNumbers(
@@ -33,6 +34,7 @@ public class Randomizer extends Lifecycle {
         } else PrinterGeneralMessagesUtils.printRedMessage("State is different from «RANDOMIZER»");
     }
 
+    @Override
     @ShellMethod(key = "rr_info", value = "Info about randomizer")
     public void getInfo() {
         if(State.getStatus() == State.Status.RANDOMIZER) {

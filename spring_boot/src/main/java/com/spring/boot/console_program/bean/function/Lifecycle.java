@@ -9,14 +9,8 @@ import org.springframework.beans.factory.BeanNameAware;
 public abstract class Lifecycle implements BeanNameAware {
 
     protected String beanName;
-    protected String[] funcs;
-    protected String description;
-
-    protected Lifecycle() {}
-
-    protected Lifecycle(String beanName) {
-        this.beanName = beanName;
-    }
+    protected final String[] funcs;
+    protected final String description;
 
     protected Lifecycle(String[] funcs, String description) {
         this.funcs = funcs;

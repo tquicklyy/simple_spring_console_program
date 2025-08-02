@@ -13,7 +13,7 @@ import org.springframework.shell.standard.ShellOption;
 import java.util.Random;
 
 @ShellComponent
-@ShellCommandGroup("Randomizer commands")
+@ShellCommandGroup("Randomizer Commands")
 public class Randomizer extends Lifecycle {
 
     private int counter = 1;

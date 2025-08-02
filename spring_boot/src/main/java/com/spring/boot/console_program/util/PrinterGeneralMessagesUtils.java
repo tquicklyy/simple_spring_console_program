@@ -47,7 +47,7 @@ public class PrinterGeneralMessagesUtils {
     }
 
     public static void printOptionsWithFuncs(String[] funcs) {
-        LOG.info("Available methods for this function:");
+        LOG.info("Available functions:");
         for (String func : funcs) {
             LOG.info("➤ {}",
                     func);

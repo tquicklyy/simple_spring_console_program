@@ -5,15 +5,19 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.shell.standard.ShellCommandGroup;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @ShellComponent
-public class WorkTime implements BeanNameAware {
+@ShellCommandGroup("Time Commands")
+public class Time implements BeanNameAware {
 
     private String beanName;
     CountDownLatch latch = new CountDownLatch(1);
@@ -26,9 +30,14 @@ public class WorkTime implements BeanNameAware {
 
     private static int timeWork = 1;
 
-    @ShellMethod(key = "time", value = "Get work time")
+    @ShellMethod(key = "time_work", value = "Get work time")
     public void getWorkTime() {
         printTimeOfWork();
+    }
+
+    @ShellMethod(key = "time_current", value = "Get current local time")
+    public void getCurrentTime() {
+        PrinterGeneralMessagesUtils.printMessage(DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalTime.now()));
     }
 
     @Override

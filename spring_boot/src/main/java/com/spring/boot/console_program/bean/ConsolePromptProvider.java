@@ -1,6 +1,5 @@
 package com.spring.boot.console_program.bean;
 
-import com.spring.boot.console_program.bean.function.WorkTime;
 import org.jline.utils.AttributedString;
 import org.jline.utils.AttributedStyle;
 import org.slf4j.Logger;

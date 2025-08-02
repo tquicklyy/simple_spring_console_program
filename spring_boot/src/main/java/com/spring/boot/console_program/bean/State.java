@@ -18,16 +18,15 @@ public class State {
     private static ApplicationEvent exitEvent;
 
     private final ApplicationEventPublisher publisher;
-    private final Randomizer randomizer;
 
-    public State(ApplicationEventPublisher publisher, Randomizer randomizer) {
+    public State(ApplicationEventPublisher publisher) {
         this.publisher = publisher;
-        this.randomizer = randomizer;
     }
 
     public enum Status  {
         NONE,
-        RANDOMIZER
+        RANDOMIZER,
+        CALCULATOR
     }
 
     @ShellMethod(key = "reset", value = "Reset the state")

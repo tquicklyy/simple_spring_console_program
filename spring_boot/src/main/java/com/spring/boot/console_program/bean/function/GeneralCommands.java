@@ -24,11 +24,6 @@ public class GeneralCommands extends Lifecycle{
         this.appName = appName;
     }
 
-    @Override
-    protected void postConstruct() {
-        PrinterGeneralMessagesUtils.printRedMessage("General commands has been started!");
-    }
-
     @ShellMethod(key = "app_info", value = "Info about application")
     public void printHelloMessage() {
         PrinterGeneralMessagesUtils.printMessage(description);

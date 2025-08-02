@@ -23,12 +23,7 @@ public class Randomizer extends Lifecycle {
         super(funcs, description);
     }
 
-    @Override
-    protected void postConstruct() {
-        PrinterGeneralMessagesUtils.printRedMessage("Randomizer has been started!");
-    }
-
-    @ShellMethod(key = "numbers", value = "Generate random numbers")
+    @ShellMethod(key = "rr_numbers", value = "Generate random numbers")
     public void getNumbers(
             @ShellOption(defaultValue = "0", help = "The left boundary of the number generation range") int left,
             @ShellOption(defaultValue = "100", help = "The right boundary of the number generation range") int right,
@@ -38,7 +33,7 @@ public class Randomizer extends Lifecycle {
         } else PrinterGeneralMessagesUtils.printRedMessage("State is different from «RANDOMIZER»");
     }
 
-    @ShellMethod(key = "randomizer_info", value = "Info about randomizer")
+    @ShellMethod(key = "rr_info", value = "Info about randomizer")
     public void getInfo() {
         if(State.getStatus() == State.Status.RANDOMIZER) {
             PrinterGeneralMessagesUtils.printMessage(description);

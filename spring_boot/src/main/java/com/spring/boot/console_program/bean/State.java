@@ -1,8 +1,10 @@
 package com.spring.boot.console_program.bean;
 
-import com.spring.boot.console_program.bean.function.Randomizer;
-import com.spring.boot.console_program.event.ExitRandomizerEvent;
-import com.spring.boot.console_program.event.OpenRandomizerEvent;
+import com.spring.boot.console_program.bean.function.Calculator;
+import com.spring.boot.console_program.event.exit.ExitCalculatorEvent;
+import com.spring.boot.console_program.event.exit.ExitRandomizerEvent;
+import com.spring.boot.console_program.event.open.OpenCalculatorEvent;
+import com.spring.boot.console_program.event.open.OpenRandomizerEvent;
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
@@ -18,9 +20,11 @@ public class State {
     private static ApplicationEvent exitEvent;
 
     private final ApplicationEventPublisher publisher;
+    private final Calculator calculator;
 
-    public State(ApplicationEventPublisher publisher) {
+    public State(ApplicationEventPublisher publisher, Calculator calculator) {
         this.publisher = publisher;
+        this.calculator = calculator;
     }
 
     public enum Status  {
@@ -31,17 +35,26 @@ public class State {
 
     @ShellMethod(key = "reset", value = "Reset the state")
     public void reset() {
-        publisher.publishEvent(exitEvent);
         status = Status.NONE;
         PrinterGeneralMessagesUtils.printRedMessage("The state was reset");
+        publisher.publishEvent(exitEvent);
     }
 
     @ShellMethod(key = "randomizer", value = "Change state to «RANDOMIZER»")
     public void randomizer() {
-        publisher.publishEvent(new OpenRandomizerEvent(this));
         status = Status.RANDOMIZER;
-        exitEvent = new ExitRandomizerEvent(this);
         PrinterGeneralMessagesUtils.printRedMessage("The state has been changed to «RANDOMIZER»");
+        publisher.publishEvent(new OpenRandomizerEvent(this));
+        exitEvent = new ExitRandomizerEvent(this);
+    }
+
+    @ShellMethod(key = "calculator", value = "Change state to «CALCULATOR»")
+    public void calculator() {
+        status = Status.CALCULATOR;
+        PrinterGeneralMessagesUtils.printRedMessage("The state has been changed to «CALCULATOR»");
+        publisher.publishEvent(new OpenCalculatorEvent(this));
+        exitEvent = new ExitCalculatorEvent(this);
+        calculator.printScore();
     }
 
     public static Status getStatus() {

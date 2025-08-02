@@ -18,7 +18,9 @@ public abstract class Lifecycle implements BeanNameAware {
     }
 
     @PostConstruct
-    protected abstract void postConstruct();
+    protected void postConstruct() {
+        PrinterGeneralMessagesUtils.printRedMessage(String.format("Bean with name «%s» has been created!", beanName));
+    };
 
     @PreDestroy
     protected void preDestroy() {

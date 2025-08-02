@@ -1,4 +1,4 @@
-package com.spring.boot.console_program.event;
+package com.spring.boot.console_program.event.open;
 
 import org.springframework.context.ApplicationEvent;
 

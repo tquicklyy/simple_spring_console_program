@@ -1,6 +1,7 @@
 package com.spring.boot.console_program.bean.listener;
 
 import com.spring.boot.console_program.event.exit.ExitCalculatorEvent;
+import com.spring.boot.console_program.event.exit.ExitHeadAndTailsEvent;
 import com.spring.boot.console_program.event.exit.ExitRandomizerEvent;
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
 import org.springframework.context.event.EventListener;
@@ -17,5 +18,10 @@ public class ExitEventListenersLogging {
     @EventListener(ExitCalculatorEvent.class)
     public void onCalculatorEvent() {
         PrinterGeneralMessagesUtils.printRedMessage("Exiting the calculator");
+    }
+
+    @EventListener(ExitHeadAndTailsEvent.class)
+    public void onHeadAndTailsEvent() {
+        PrinterGeneralMessagesUtils.printRedMessage("Exiting from head and tails game");
     }
 }

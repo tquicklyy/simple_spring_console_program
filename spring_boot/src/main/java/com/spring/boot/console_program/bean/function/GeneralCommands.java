@@ -1,7 +1,6 @@
 package com.spring.boot.console_program.bean.function;
 
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
-import com.spring.boot.console_program.util.StringDesign;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,10 +23,10 @@ public class GeneralCommands extends Lifecycle{
         this.appName = appName;
     }
 
-    @ShellMethod(key = "app_info", value = "Info about application")
-    public void printHelloMessage() {
-        PrinterGeneralMessagesUtils.printMessage(description);
-        PrinterGeneralMessagesUtils.printOptionsWithFuncs(funcs);
+    @ShellMethod(key = "app_info", value = "Info about the application")
+    @Override
+    public void getInfo() {
+        super.getInfo();
     }
 
 }

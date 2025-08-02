@@ -54,13 +54,25 @@ public class Calculator extends Lifecycle {
 
     @ShellMethod(key = "cr_score", value = "Print the score to the console")
     public void printScore() {
-        PrinterGeneralMessagesUtils.printYellowMessage(String.format("Your current score: %.2f", score).replace(',', '.'));
+        if(State.getStatus() == State.Status.CALCULATOR) {
+            PrinterGeneralMessagesUtils.printYellowMessage(String.format("Your current score: %.2f", score).replace(',', '.'));
+        } else PrinterGeneralMessagesUtils.printRedMessage("State is different from «CALCULATOR»");
     }
 
     @ShellMethod(key = "cr_score_reset", value = "Reset the score to zero")
     public void resetScore() {
-        score = 0;
-        printScore();
+        if (State.getStatus() == State.Status.CALCULATOR) {
+            score = 0;
+            printScore();
+        } else PrinterGeneralMessagesUtils.printRedMessage("State is different from «CALCULATOR»");
+    }
+
+    @ShellMethod(key = "cr_info", value = "Info about calculator")
+    public void getInfo() {
+        if (State.getStatus() == State.Status.CALCULATOR) {
+            score = 0;
+            super.getInfo();
+        } else PrinterGeneralMessagesUtils.printRedMessage("State is different from «CALCULATOR»");
     }
 
     private void summation(double number) {

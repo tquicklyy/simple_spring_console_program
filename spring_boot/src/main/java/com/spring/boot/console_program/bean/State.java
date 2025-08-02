@@ -2,8 +2,10 @@ package com.spring.boot.console_program.bean;
 
 import com.spring.boot.console_program.bean.function.Calculator;
 import com.spring.boot.console_program.event.exit.ExitCalculatorEvent;
+import com.spring.boot.console_program.event.exit.ExitHeadAndTailsEvent;
 import com.spring.boot.console_program.event.exit.ExitRandomizerEvent;
 import com.spring.boot.console_program.event.open.OpenCalculatorEvent;
+import com.spring.boot.console_program.event.open.OpenHeadAndTailsEvent;
 import com.spring.boot.console_program.event.open.OpenRandomizerEvent;
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
 import org.springframework.context.ApplicationEvent;
@@ -30,7 +32,8 @@ public class State {
     public enum Status  {
         NONE,
         RANDOMIZER,
-        CALCULATOR
+        CALCULATOR,
+        HEAD_AND_TAILS
     }
 
     @ShellMethod(key = "reset", value = "Reset the state")
@@ -55,6 +58,14 @@ public class State {
         publisher.publishEvent(new OpenCalculatorEvent(this));
         exitEvent = new ExitCalculatorEvent(this);
         calculator.printScore();
+    }
+
+    @ShellMethod(key = "head_and_tails", value = "Change state to «HEAD_AND_TAILS»")
+    public void headAndTails() {
+        status = Status.HEAD_AND_TAILS;
+        PrinterGeneralMessagesUtils.printRedMessage("The state has been changed to «HEAD_AND_TAILS»");
+        publisher.publishEvent(new OpenHeadAndTailsEvent(this));
+        exitEvent = new ExitHeadAndTailsEvent(this);
     }
 
     public static Status getStatus() {

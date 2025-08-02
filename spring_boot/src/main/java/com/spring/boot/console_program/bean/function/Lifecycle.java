@@ -27,6 +27,11 @@ public abstract class Lifecycle implements BeanNameAware {
         PrinterGeneralMessagesUtils.printRedMessage(String.format("Bean with name «%s» has been closed!", beanName));
     }
 
+    public void getInfo() {
+        PrinterGeneralMessagesUtils.printMessage(description);
+        PrinterGeneralMessagesUtils.printOptionsWithFuncs(funcs);
+    }
+
     @Override
     public void setBeanName(String name) {
         this.beanName = name;

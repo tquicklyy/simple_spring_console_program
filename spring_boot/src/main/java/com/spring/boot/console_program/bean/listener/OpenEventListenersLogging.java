@@ -1,11 +1,6 @@
 package com.spring.boot.console_program.bean.listener;
 
-import com.spring.boot.console_program.event.exit.ExitHeadAndTailsEvent;
-import com.spring.boot.console_program.event.exit.ExitRockPaperScissors;
-import com.spring.boot.console_program.event.open.OpenCalculatorEvent;
-import com.spring.boot.console_program.event.open.OpenHeadAndTailsEvent;
-import com.spring.boot.console_program.event.open.OpenRandomizerEvent;
-import com.spring.boot.console_program.event.open.OpenRockPaperScissors;
+import com.spring.boot.console_program.event.open.*;
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -31,6 +26,16 @@ public class OpenEventListenersLogging {
     @EventListener(OpenRockPaperScissors.class)
     public void onRockPaperScissors() {
         PrinterGeneralMessagesUtils.printRedMessage("Opening rock, paper, scissors game");
+    }
+
+    @EventListener(OpenPasswordGeneratorEvent.class)
+    public void onPasswordGenerator() {
+        PrinterGeneralMessagesUtils.printRedMessage("Opening from password generator");
+    }
+
+    @EventListener(OpenLengthOfStringEvent.class)
+    public void onLengthOfString() {
+        PrinterGeneralMessagesUtils.printRedMessage("Opening the function to get the length of the string");
     }
 
 }

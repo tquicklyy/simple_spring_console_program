@@ -2,6 +2,7 @@ package com.spring.boot.console_program.bean.function;
 
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.shell.standard.ShellCommandGroup;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 @ShellComponent
+@ShellCommandGroup("Password generator commands")
 public class PasswordGenerator extends Function {
 
     private static final List<Character> symbols = new ArrayList<>();

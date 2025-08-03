@@ -22,8 +22,6 @@ public class Randomizer extends Function {
         super(funcs, description);
     }
 
-
-
     @ShellMethod(key = "rr_numbers", value = "Generate random numbers")
     public void getNumbers(
             @ShellOption(defaultValue = "0", help = "The left boundary of the number generation range") int left,

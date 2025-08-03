@@ -3,6 +3,7 @@ package com.spring.boot.console_program.bean.function;
 import com.spring.boot.console_program.enumeration.ResultOfGame;
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.shell.standard.ShellCommandGroup;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -10,6 +11,7 @@ import org.springframework.shell.standard.ShellOption;
 import java.util.Random;
 
 @ShellComponent
+@ShellCommandGroup("Rock, paper, scissors commands")
 public class RockPaperScissors extends Function {
 
     private enum ChoicesInGame {

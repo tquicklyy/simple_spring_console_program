@@ -36,7 +36,8 @@ public class State extends Function {
         CALCULATOR,
         HEAD_AND_TAILS,
         ROCK_PAPER_SCISSORS,
-        PASSWORD_GENERATOR
+        PASSWORD_GENERATOR,
+        LENGTH_OF_STRING
     }
 
     @Override
@@ -91,6 +92,14 @@ public class State extends Function {
         PrinterGeneralMessagesUtils.printRedMessage("The state has been changed to «PASSWORD_GENERATOR»");
         publisher.publishEvent(new OpenPasswordGeneratorEvent(this));
         exitEvent = new ExitPasswordGeneratorEvent(this);
+    }
+
+    @ShellMethod(key = "state_los", value = "Change state to «LENGTH_OF_STRING»")
+    public void lengthOfString() {
+        status = Status.LENGTH_OF_STRING;
+        PrinterGeneralMessagesUtils.printRedMessage("The state has been changed to «LENGTH_OF_STRING»");
+        publisher.publishEvent(new OpenLengthOfStringEvent(this));
+        exitEvent = new ExitLengthOfStringEvent(this);
     }
 
     public static Status getStatus() {

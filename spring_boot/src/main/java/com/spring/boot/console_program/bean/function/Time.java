@@ -1,10 +1,7 @@
 package com.spring.boot.console_program.bean.function;
 
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
-import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.shell.standard.ShellCommandGroup;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -17,9 +14,15 @@ import java.util.concurrent.Executors;
 
 @ShellComponent
 @ShellCommandGroup("Time Commands")
-public class Time implements BeanNameAware {
+public class Time extends Function {
 
-    private String beanName;
+    public Time(
+            @Value("${app.funcs.time}") String[] funcs,
+            @Value("${app.description.time}") String description) {
+        super(funcs, description);
+    }
+
+    private static int timeWork = 1;
     CountDownLatch latch = new CountDownLatch(1);
 
     ExecutorService executor = Executors.newSingleThreadExecutor(runnable -> {
@@ -28,26 +31,9 @@ public class Time implements BeanNameAware {
         return thread;
     });
 
-    private static int timeWork = 1;
-
-    @ShellMethod(key = "time_work", value = "Get work time")
-    public void getWorkTime() {
-        printTimeOfWork();
-    }
-
-    @ShellMethod(key = "time_current", value = "Get current local time")
-    public void getCurrentTime() {
-        PrinterGeneralMessagesUtils.printMessage(DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalTime.now()));
-    }
-
     @Override
-    public void setBeanName(@Nonnull String name) {
-        this.beanName = name;
-    }
-
-    @PostConstruct
-    private void startTimeWork() {
-        PrinterGeneralMessagesUtils.printRedMessage("Work time has been started!");
+    protected void postConstruct() {
+        super.postConstruct();
         executor.execute(() -> {
             while (true) {
                 try {
@@ -62,12 +48,26 @@ public class Time implements BeanNameAware {
         });
     }
 
-    @PreDestroy
-    private void stopWorkTime() throws InterruptedException {
+    @Override
+    protected void preDestroy() {
         PrinterGeneralMessagesUtils.printRedMessage("Starting to notify the timer about the stop!");
         executor.shutdownNow();
-        latch.await();
-        PrinterGeneralMessagesUtils.printRedMessage(String.format("Bean with name «%s» has been closed!", beanName));
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        super.preDestroy();
+    }
+
+    @ShellMethod(key = "time_work", value = "Get work time")
+    public void getWorkTime() {
+        printTimeOfWork();
+    }
+
+    @ShellMethod(key = "time_current", value = "Get current local time")
+    public void getCurrentTime() {
+        PrinterGeneralMessagesUtils.printMessage(DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalTime.now()));
     }
 
     public void printTimeOfWork() {

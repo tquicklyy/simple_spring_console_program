@@ -12,14 +12,12 @@ import org.springframework.shell.standard.ShellMethod;
 public class GeneralCommands extends Function {
 
     private static final Logger LOG = LoggerFactory.getLogger(GeneralCommands.class);
-    private final String appName;
 
     public GeneralCommands(
             @Value("${app.name}") String appName,
             @Value("#{'${app.funcs.general}'.split(';')}") String[] funcs,
             @Value("${app.description.general}") String description ) {
         super(funcs, description);
-        this.appName = appName;
     }
 
     @Override
@@ -27,5 +25,4 @@ public class GeneralCommands extends Function {
     public void getInfo() {
         super.getInfo();
     }
-
 }

@@ -10,32 +10,32 @@ public class OpenEventListenersLogging {
 
     @EventListener(OpenRandomizerEvent.class)
     public void onRandomizerEvent() {
-        PrinterGeneralMessagesUtils.printRedMessage("Opening the randomizer");
+        PrinterGeneralMessagesUtils.printMessage ("Opening the randomizer");
     }
 
     @EventListener(OpenCalculatorEvent.class)
     public void onCalculatorEvent() {
-        PrinterGeneralMessagesUtils.printRedMessage("Opening the calculator");
+        PrinterGeneralMessagesUtils.printMessage ("Opening the calculator");
     }
 
     @EventListener(OpenHeadAndTailsEvent.class)
     public void onHeadAndTailsEvent() {
-        PrinterGeneralMessagesUtils.printRedMessage("Opening head and tails game");
+        PrinterGeneralMessagesUtils.printMessage ("Opening head and tails game");
     }
 
     @EventListener(OpenRockPaperScissors.class)
     public void onRockPaperScissors() {
-        PrinterGeneralMessagesUtils.printRedMessage("Opening rock, paper, scissors game");
+        PrinterGeneralMessagesUtils.printMessage ("Opening rock, paper, scissors game");
     }
 
     @EventListener(OpenPasswordGeneratorEvent.class)
     public void onPasswordGenerator() {
-        PrinterGeneralMessagesUtils.printRedMessage("Opening from password generator");
+        PrinterGeneralMessagesUtils.printMessage ("Opening from password generator");
     }
 
     @EventListener(OpenLengthOfStringEvent.class)
     public void onLengthOfString() {
-        PrinterGeneralMessagesUtils.printRedMessage("Opening the function to get the length of the string");
+        PrinterGeneralMessagesUtils.printMessage ("Opening the function to get the length of the string");
     }
 
 }

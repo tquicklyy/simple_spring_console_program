@@ -15,26 +15,26 @@ public class ExitEventListenersLogging {
 
     @EventListener(ExitCalculatorEvent.class)
     public void onCalculatorEvent() {
-        PrinterGeneralMessagesUtils.printRedMessage("Exiting the calculator");
+        PrinterGeneralMessagesUtils.printMessage ("Exiting the calculator");
     }
 
     @EventListener(ExitHeadAndTailsEvent.class)
     public void onHeadAndTailsEvent() {
-        PrinterGeneralMessagesUtils.printRedMessage("Exiting from head and tails game");
+        PrinterGeneralMessagesUtils.printMessage ("Exiting from head and tails game");
     }
 
     @EventListener(ExitRockPaperScissors.class)
     public void onRockPaperScissors() {
-        PrinterGeneralMessagesUtils.printRedMessage("Exiting from rock, paper, scissors game");
+        PrinterGeneralMessagesUtils.printMessage ("Exiting from rock, paper, scissors game");
     }
 
     @EventListener(ExitPasswordGeneratorEvent.class)
     public void onPasswordGenerator() {
-        PrinterGeneralMessagesUtils.printRedMessage("Exiting from password generator");
+        PrinterGeneralMessagesUtils.printMessage ("Exiting from password generator");
     }
 
     @EventListener(ExitLengthOfStringEvent.class)
     public void onLengthOfString() {
-        PrinterGeneralMessagesUtils.printRedMessage("Exiting the function to get the length of the string");
+        PrinterGeneralMessagesUtils.printMessage ("Exiting the function to get the length of the string");
     }
 }

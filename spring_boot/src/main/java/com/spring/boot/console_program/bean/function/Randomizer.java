@@ -44,6 +44,7 @@ public class Randomizer extends Function {
     private void getNewNumber(int limit, int left, int right) {
         try {
             PrinterGeneralMessagesUtils.printYellowMessage("Starting the enumeration of numbers");
+            if(limit < 1) throw new IllegalArgumentException();
             new Random().ints(left, right).limit(limit).forEach(number -> {
                 LOG.info("{} number: {}", counter, number);
                 counter++;

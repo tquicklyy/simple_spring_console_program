@@ -31,7 +31,7 @@ public class PrinterGeneralMessagesUtils {
     }
 
     public static void printDotsAndWaitMessage(int countOfDots) throws InterruptedException {
-        LOG.info(String.format("%s Please wait", StringDesign.RED_COLOR));
+        LOG.info(String.format("%sPlease wait", StringDesign.RED_COLOR));
         System.out.print(StringDesign.RED_COLOR);
         for (int i = 0; i < countOfDots; i++) {
             System.out.print(".");

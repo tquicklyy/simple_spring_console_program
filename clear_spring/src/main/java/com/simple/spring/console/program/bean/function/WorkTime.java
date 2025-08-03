@@ -7,6 +7,7 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -17,6 +18,7 @@ public class WorkTime implements BeanNameAware {
 
     ExecutorService executor = Executors.newSingleThreadExecutor();
 
+    private CountDownLatch latch = new CountDownLatch(1);
     private static int timeWork = 1;
 
     @Override
@@ -34,6 +36,7 @@ public class WorkTime implements BeanNameAware {
                     timeWork++;
                 } catch (InterruptedException e) {
                     PrinterGeneralMessagesUtils.printRedMessage("The timer is notified about the stop!");
+                    latch.countDown();
                     break;
                 }
             }
@@ -44,6 +47,11 @@ public class WorkTime implements BeanNameAware {
     private void stopWorkTime() {
         PrinterGeneralMessagesUtils.printRedMessage("Starting to notify the timer about the stop!");
         executor.shutdownNow();
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         PrinterGeneralMessagesUtils.printRedMessage(String.format("Bean with name «%s» has been closed!", beanName));
     }
 

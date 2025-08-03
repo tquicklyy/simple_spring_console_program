@@ -43,9 +43,13 @@ public class RockPaperScissors extends Function {
             @ShellOption(help = "Your choice in game") String choice
     ) {
         if(State.getStatus() == State.Status.ROCK_PAPER_SCISSORS) {
-            ChoicesInGame computerChoice = CHOICES_IN_GAME[new Random().nextInt(0, 3)];
-            PrinterGeneralMessagesUtils.printRedMessage(String.format("Computer made choice: %s", computerChoice));
-            ResultOfGame.printResultOfGame(ChoicesInGame.whoWin(ChoicesInGame.valueOf(choice.toUpperCase()), computerChoice));
+            try {
+                ChoicesInGame computerChoice = CHOICES_IN_GAME[new Random().nextInt(0, 3)];
+                ResultOfGame.printResultOfGame(ChoicesInGame.whoWin(ChoicesInGame.valueOf(choice.toUpperCase()), computerChoice));
+                PrinterGeneralMessagesUtils.printRedMessage(String.format("Computer made choice: %s", computerChoice));
+            } catch (IllegalArgumentException e) {
+                PrinterGeneralMessagesUtils.printAboutIncorrectInput();
+            }
         } else PrinterGeneralMessagesUtils.printRedMessage("State is different from «ROCK_PAPER_SCISSORS»");
     }
 

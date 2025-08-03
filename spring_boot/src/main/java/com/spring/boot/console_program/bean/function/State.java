@@ -1,13 +1,7 @@
 package com.spring.boot.console_program.bean.function;
 
-import com.spring.boot.console_program.event.exit.ExitCalculatorEvent;
-import com.spring.boot.console_program.event.exit.ExitHeadAndTailsEvent;
-import com.spring.boot.console_program.event.exit.ExitRandomizerEvent;
-import com.spring.boot.console_program.event.exit.ExitRockPaperScissors;
-import com.spring.boot.console_program.event.open.OpenCalculatorEvent;
-import com.spring.boot.console_program.event.open.OpenHeadAndTailsEvent;
-import com.spring.boot.console_program.event.open.OpenRandomizerEvent;
-import com.spring.boot.console_program.event.open.OpenRockPaperScissors;
+import com.spring.boot.console_program.event.exit.*;
+import com.spring.boot.console_program.event.open.*;
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEvent;
@@ -41,7 +35,8 @@ public class State extends Function {
         RANDOMIZER,
         CALCULATOR,
         HEAD_AND_TAILS,
-        ROCK_PAPER_SCISSORS
+        ROCK_PAPER_SCISSORS,
+        PASSWORD_GENERATOR
     }
 
     @Override
@@ -88,6 +83,14 @@ public class State extends Function {
         PrinterGeneralMessagesUtils.printRedMessage("The state has been changed to «ROCK_PAPER_SCISSORS»");
         publisher.publishEvent(new OpenRockPaperScissors(this));
         exitEvent = new ExitRockPaperScissors(this);
+    }
+
+    @ShellMethod(key = "state_pg", value = "Change state to «PASSWORD_GENERATOR»")
+    public void passwordGenerator() {
+        status = Status.PASSWORD_GENERATOR;
+        PrinterGeneralMessagesUtils.printRedMessage("The state has been changed to «PASSWORD_GENERATOR»");
+        publisher.publishEvent(new OpenPasswordGeneratorEvent(this));
+        exitEvent = new ExitPasswordGeneratorEvent(this);
     }
 
     public static Status getStatus() {

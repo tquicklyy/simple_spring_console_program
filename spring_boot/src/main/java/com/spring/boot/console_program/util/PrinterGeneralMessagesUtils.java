@@ -26,16 +26,19 @@ public class PrinterGeneralMessagesUtils {
     }
 
     public static void printDefaultMessageForEvent() throws InterruptedException {
-        LOG.info("The necessary data is being accessed.");
+        printRedMessage("The necessary data is being accessed.");
         printDotsAndWaitMessage(5);
     }
 
     public static void printDotsAndWaitMessage(int countOfDots) throws InterruptedException {
-        LOG.info("Please wait");
+        LOG.info(String.format("%s Please wait", StringDesign.RED_COLOR));
+        System.out.print(StringDesign.RED_COLOR);
         for (int i = 0; i < countOfDots; i++) {
             System.out.print(".");
             Thread.sleep(ThreadUtils.TIME_TO_SLEEP);
         }
+        System.out.print(StringDesign.DEFAULT_COLOR);
+        skipText(1);
     }
 
     /**

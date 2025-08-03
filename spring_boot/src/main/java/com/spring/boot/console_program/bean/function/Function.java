@@ -1,6 +1,7 @@
 package com.spring.boot.console_program.bean.function;
 
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.BeanNameAware;
@@ -20,7 +21,7 @@ public abstract class Function implements BeanNameAware {
     @PostConstruct
     protected void postConstruct() {
         PrinterGeneralMessagesUtils.printRedMessage(String.format("Bean with name «%s» has been created!", beanName));
-    };
+    }
 
     @PreDestroy
     protected void preDestroy() {
@@ -33,7 +34,7 @@ public abstract class Function implements BeanNameAware {
     }
 
     @Override
-    public void setBeanName(String name) {
+    public void setBeanName(@Nonnull String name) {
         this.beanName = name;
     }
 }

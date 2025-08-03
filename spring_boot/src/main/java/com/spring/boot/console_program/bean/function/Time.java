@@ -8,9 +8,7 @@ import org.springframework.shell.standard.ShellMethod;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 @ShellComponent
 @ShellCommandGroup("Time Commands")
@@ -23,9 +21,8 @@ public class Time extends Function {
     }
 
     private static int timeWork = 1;
-    CountDownLatch latch = new CountDownLatch(1);
 
-    ExecutorService executor = Executors.newSingleThreadExecutor(runnable -> {
+    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(runnable -> {
         Thread thread = new Thread(runnable);
         thread.setDaemon(true);
         return thread;
@@ -34,29 +31,13 @@ public class Time extends Function {
     @Override
     protected void postConstruct() {
         super.postConstruct();
-        executor.execute(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(1000);
-                    timeWork++;
-                } catch (InterruptedException e) {
-                    PrinterGeneralMessagesUtils.printRedMessage("The timer is notified about the stop!");
-                    latch.countDown();
-                    break;
-                }
-            }
-        });
+        executor.scheduleAtFixedRate(() -> timeWork++, 0, 1, TimeUnit.SECONDS);
     }
 
     @Override
     protected void preDestroy() {
         PrinterGeneralMessagesUtils.printRedMessage("Starting to notify the timer about the stop!");
-        executor.shutdownNow();
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        PrinterGeneralMessagesUtils.printRedMessage("The timer is notified about the stop!");
         super.preDestroy();
     }
 

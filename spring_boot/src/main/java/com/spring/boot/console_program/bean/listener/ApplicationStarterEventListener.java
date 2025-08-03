@@ -1,6 +1,5 @@
 package com.spring.boot.console_program.bean.listener;
 
-
 import com.spring.boot.console_program.bean.function.GeneralCommands;
 import com.spring.boot.console_program.util.PrinterGeneralMessagesUtils;
 import org.springframework.context.event.ContextRefreshedEvent;

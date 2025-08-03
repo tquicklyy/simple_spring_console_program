@@ -13,6 +13,10 @@ public class Calculator extends Function {
 
     private double score;
 
+    public double getScore() {
+        return score;
+    }
+
     public Calculator(
             @Value("${app.funcs.calculator}") String[] funcs,
             @Value("${app.description.calculator}") String description ) {
